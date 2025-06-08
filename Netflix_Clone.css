@@ -1,0 +1,97 @@
+/* Global Styles */
+body {
+  margin: 0;
+  background-color: #111;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #000;
+}
+
+.logo {
+  width: 100px;
+}
+
+.navbar nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Hero Section */
+.hero {
+  background: url('./images/Background.jpg') no-repeat center center/cover;
+  height: 80vh;
+  display: flex;
+  align-items: flex-end;
+  padding: 60px 30px;
+}
+
+.hero-content {
+  max-width: 600px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.hero p {
+  margin: 10px 0 20px;
+  font-size: 1.2rem;
+  color: #ddd;
+}
+
+.buttons .btn {
+  padding: 10px 20px;
+  margin-right: 10px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.play {
+  background-color: #fff;
+  color: #000;
+}
+
+.list {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Movie Row */
+.row {
+  padding: 20px;
+}
+
+.row h2 {
+  margin-left: 10px;
+}
+
+.row-posters {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+  gap: 10px;
+}
+
+.row-poster {
+  width: 100px;
+  border-radius: 3px;
+  transition: transform 0.3s;
+}
+
+.row-poster:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}

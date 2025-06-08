@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Netflix Clone</title>
+    <link rel="stylesheet" href="Netflix_Clone.css" />
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="nav-left">
+            <img src="./images/Netflix-logo.png" class="logo" alt="Netflix Logo">
+            <nav class="main-nav">
+                <a href="#" class="active">Home</a>
+                <a href="#">TV Shows</a>
+                <a href="#">Movies</a>
+                <a href="#">New & Popular</a>
+                <a href="#">My List</a>
+            </nav>
+        </div>
+        <div class="nav-right">
+            <div class="search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Titles, people, genres">
+            </div>
+            <a href="#" class="notifications">
+                <i class="fas fa-bell"></i>
+            </a>
+            <div class="profile">
+                <img src="./images/profile-avatar.jpg" alt="Profile">
+                <i class="fas fa-caret-down"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="series-badge">NETFLIX ORIGINAL</div>
+            <h1>Stranger Things</h1>
+            <div class="metadata">
+                <span class="rating">16+</span>
+                <span class="season">4 Seasons</span>
+                <span class="hd">HD</span>
+            </div>
+            <p class="synopsis">When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces, and one strange little girl.</p>
+            <div class="buttons">
+                <button class="btn play"><i class="fas fa-play"></i> Play</button>
+                <button class="btn more-info"><i class="fas fa-info-circle"></i> More Info</button>
+                <button class="btn list"><i class="fas fa-plus"></i></button>
+            </div>
+        </div>
+        <div class="hero-vignette"></div>
+    </section>
+
+    <!-- Featured Categories -->
+    <section class="categories">
+        <div class="row">
+            <h2>Trending Now</h2>
+            <div class="row-posters">
+                <div class="poster-wrapper">
+                    <img class="row-poster" src="./images/Openheimer.jpg" alt="Openheimer">
+                    <div class="poster-info">
+                        <div class="controls">
+                            <button class="play-btn"><i class="fas fa-play"></i></button>
+                            <button class="add-btn"><i class="fas fa-plus"></i></button>
+                            <button class="like-btn"><i class="fas fa-thumbs-up"></i></button>
+                        </div>
+                        <div class="info">
+                            <span class="match">98% Match</span>
+                            <span class="rating">R</span>
+                            <span class="duration">3h 10m</span>
+                        </div>
+                        <div class="genres">
+                            <span>Thriller</span>
+                            <span>Drama</span>
+                            <span>Historical</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Repeat poster-wrapper for other movies -->
+            </div>
+            <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <div class="row">
+            <h2>Popular</h2>
+            <div class="row-posters">
+                <div class="poster-wrapper">
+                    <img class="row-poster" src="./images/Saaho.jpg" alt="Saaho">
+                    <div class="poster-info">
+                        <div class="controls">
+                            <button class="play-btn"><i class="fas fa-play"></i></button>
+                            <button class="add-btn"><i class="fas fa-plus"></i></button>
+                            <button class="like-btn"><i class="fas fa-thumbs-up"></i></button>
+                        </div>
+                        <div class="info">
+                            <span class="match">98% Match</span>
+                            <span class="rating">R</span>
+                            <span class="duration">2h 49m</span>
+                        </div>
+                        <div class="genres">
+                            <span>Thriller</span>
+                            <span>mystery</span>
+                            <span>Action</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Repeat poster-wrapper for other movies -->
+            </div>
+            <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <div class="row">
+            <h2>Famous movie</h2>
+            <div class="row-posters">
+                <div class="poster-wrapper">
+                    <img class="row-poster" src="./images/Salaar.jpg" alt="Salaar">
+                    <div class="poster-info">
+                        <div class="controls">
+                            <button class="play-btn"><i class="fas fa-play"></i></button>
+                            <button class="add-btn"><i class="fas fa-plus"></i></button>
+                            <button class="like-btn"><i class="fas fa-thumbs-up"></i></button>
+                        </div>
+                        <div class="info">
+                            <span class="match">98% Match</span>
+                            <span class="rating">R</span>
+                            <span class="duration">2h 55m</span>
+                        </div>
+                        <div class="genres">
+                            <span>Action</span>
+                            <span>Drama</span>
+                            <span>Crime</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Repeat poster-wrapper for other movies -->
+            </div>
+            <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <div class="row">
+            <h2>Upcoming movie</h2>
+            <div class="row-posters">
+                <div class="poster-wrapper">
+                    <img class="row-poster" src="./images/Raid 2.jpg" alt="Raid 2">
+                    <div class="poster-info">
+                        <div class="controls">
+                            <button class="play-btn"><i class="fas fa-play"></i></button>
+                            <button class="add-btn"><i class="fas fa-plus"></i></button>
+                            <button class="like-btn"><i class="fas fa-thumbs-up"></i></button>
+                        </div>
+                        <div class="info">
+                            <span class="match">98% Match</span>
+                            <span class="rating">R</span>
+                            <span class="duration">2h 15m</span>
+                        </div>
+                        <div class="genres">
+                            <span>Crime</span>
+                            <span>Drama</span>
+                            <span>Action</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Repeat poster-wrapper for other movies -->
+            </div>
+            <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="row">
+            <h2>Upcoming movie</h2>
+            <div class="row-posters">
+                <div class="poster-wrapper">
+                    <img class="row-poster" src="./images/War 2.jpg" alt="War 2">
+                    <div class="poster-info">
+                        <div class="controls">
+                            <button class="play-btn"><i class="fas fa-play"></i></button>
+                            <button class="add-btn"><i class="fas fa-plus"></i></button>
+                            <button class="like-btn"><i class="fas fa-thumbs-up"></i></button>
+                        </div>
+                        <div class="info">
+                            <span class="match">98% Match</span>
+                            <span class="rating">R</span>
+                            <span class="duration">2h 55m</span>
+                        </div>
+                        <div class="genres">
+                            <span>Thriller</span>
+                            <span>Action</span>
+                            <span>Drama</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Repeat poster-wrapper for other movies -->
+            </div>
+            <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <!-- More Categories -->
+        <div class="row">
+            <h2>Continue Watching</h2>
+            <!-- Similar structure as above -->
+        </div>
+
+        <div class="row">
+            <h2>New Releases</h2>
+            <!-- Similar structure as above -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <a href="#">Audio Description</a>
+                    <a href="#">Investor Relations</a>
+                    <a href="#">Legal Notices</a>
+                </div>
+                <div class="footer-column">
+                    <a href="#">Help Center</a>
+                    <a href="#">Jobs</a>
+                    <a href="#">Cookie Preferences</a>
+                </div>
+                <div class="footer-column">
+                    <a href="#">Gift Cards</a>
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Corporate Information</a>
+                </div>
+                <div class="footer-column">
+                    <a href="#">Media Center</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Contact Us</a>
+                </div>
+            </div>
+            <button class="service-code">Service Code</button>
+            <p class="copyright">&copy; 1997-2025 Netflix, Inc.</p>
+        </div>
+    </footer>
+
+    <!-- Modal for video player -->
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+            <video controls>
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <script src="Netflix_Clone.js"></script>
+</body>
+</html>
