@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Lovely Partner</title>
+  <style>
+    body {
+      background: #222;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .gallery-container {
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .photo-container {
+      box-shadow: 0 4px 24px #000a;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    img {
+      width: 400px;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+    .gallery-btn {
+      background: #e50914;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      height: 50px;
+      width: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gallery-btn:disabled {
+      background: #444;
+      cursor: not-allowed;
+    }
+    .music-controls {
+      margin: 30px 0 0 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    button {
+      background: #e50914;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #b0060f;
+    }
+    .duration {
+      font-family: monospace;
+      font-size: 1rem;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>If I did anything right in my life...it was giving my heart to you</h1>
+  <div class="gallery-container">
+    <button class="gallery-btn" id="prevBtn">&#8592;</button>
+    <div class="photo-container">
+      <img id="galleryPhoto" src="images/Pure-smile.jpg/RUID2aa0c34cc36d43809d8dd2e1d6b82285.jpg" alt="Gallery Photo"     
+    </div>
+    <button class="gallery-btn" id="nextBtn">&#8594;</button>
+  </div>
+
+  <div class="music-controls">
+    <button id="playPauseBtn">Play Music</button>
+    <span id="musicStatus">Paused</span>
+    <span class="duration" id="currentTime">0:39</span> /
+    <span class="duration" id="duration">0:39</span>
+  </div>
+  <audio id="bgMusic" src="music/AudioCutter_Tu Jaane Na (PenduJatt.Com.Se).mp3" loop></audio>
+
+  <script>
+    // Automatic photo slideshow logic
+    const photos = [
+      'images/Pure-smile.jpg/RUID2aa0c34cc36d43809d8dd2e1d6b82285.jpg',
+      'images/Pure-smile.jpg/RUID2b89b3cf84fd4ccab0d276afb8e87c9a.jpg',
+      'images/Pure-smile.jpg/RUID8dc15b1444104984b0819149680b524a.jpg',
+        'images/Pure-smile.jpg/RUID2969a9dcb0ce48a694dc12f08fd64844.jpg'
+    ];
+        
+    let currentPhoto = 0;
+    const galleryPhoto = document.getElementById('galleryPhoto');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let slideshowInterval = null;
+    const SLIDESHOW_DELAY = 10000; // 10 seconds per photo
+
+    function updatePhoto() {
+      galleryPhoto.src = photos[currentPhoto];
+      prevBtn.disabled = currentPhoto === 0;
+      nextBtn.disabled = currentPhoto === photos.length - 1;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentPhoto > 0) {
+        currentPhoto--;
+        updatePhoto();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentPhoto < photos.length - 1) {
+        currentPhoto++;
+        updatePhoto();
+      }
+    });
+     function startSlideshow() {
+      if (slideshowInterval) clearInterval(slideshowInterval);
+      slideshowInterval = setInterval(() => {
+        currentPhoto = (currentPhoto + 1) % photos.length; // Loop to first photo
+        updatePhoto();
+      }, SLIDESHOW_DELAY);
+    }
+
+    function stopSlideshow() {
+      if (slideshowInterval) clearInterval(slideshowInterval);
+    }
+
+    // Start slideshow automatically
+    updatePhoto();
+    startSlideshow();
+
+    // Optional: Pause slideshow on manual navigation
+    prevBtn.addEventListener('click', stopSlideshow);
+    nextBtn.addEventListener('click', stopSlideshow);
+
+    // Music player logic (unchanged)
+    const music = document.getElementById('bgMusic');
+    const btn = document.getElementById('playPauseBtn');
+    const status = document.getElementById('musicStatus');
+    const currentTimeSpan = document.getElementById('currentTime');
+    const durationSpan = document.getElementById('duration');
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s.toString().padStart(2, '0')}`;
+    }
+    btn.addEventListener('click', () => {
+      if (music.paused) {
+        music.play();
+        btn.textContent = 'Pause Music';
+        status.textContent = 'Playing';
+      } else {
+        music.pause();
+        btn.textContent = 'Play Music';
+        status.textContent = 'Paused';
+      }
+    });
+
+    music.addEventListener('loadedmetadata', () => {
+      durationSpan.textContent = formatTime(music.duration);
+    });
+
+    music.addEventListener('timeupdate', () => {
+      currentTimeSpan.textContent = formatTime(music.currentTime);
+    });
+
+    music.addEventListener('ended', () => {
+      btn.textContent = 'Play Music';
+      status.textContent = 'Paused';
+    });
+  </script>
+</body>
