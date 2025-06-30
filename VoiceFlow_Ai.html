@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoiceFlow AI</title>
+    <!-- Tailwind CSS for basic styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f8fafc; /* Lightest blue-gray */
+            color: #1a202c; /* Dark text */
+            overflow: hidden; /* Prevent scrollbars */
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 700px; /* Max width for responsiveness */
+            margin: 20px auto;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            background-color: #ffffff;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .status-display {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #4a5568; /* Gray */
+            text-align: center;
+            min-height: 1.5rem;
+        }
+        .recognized-text-box, .ai-response-box {
+            background-color: #edf2f7; /* Lighter gray background */
+            border: 1px solid #cbd5e0; /* Gray border */
+            color: #4a5568; /* Dark gray text */
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            text-align: left;
+            font-size: 1.1rem;
+            min-height: 5rem;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            width: 100%;
+            overflow-y: auto; /* Allow scrolling for longer text */
+            max-height: 150px; /* Max height before scrolling */
+        }
+        .ai-response-box {
+            background-color: #e0f7fa; /* Light cyan background */
+            border-color: #00bcd4; /* Cyan border */
+            color: #006064; /* Dark cyan text */
+        }
+        .control-btn {
+            background-color: #10b981; /* Emerald green */
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .control-btn:hover {
+            background-color: #059669; /* Darker emerald */
+            transform: translateY(-1px);
+        }
+        .control-btn:active {
+            transform: translateY(1px);
+        }
+        .control-btn:disabled {
+            background-color: #a7f3d0; /* Lighter green for disabled */
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .message-box {
+            background-color: #fee2e2; /* Light red background */
+            border: 1px solid #ef4444; /* Red border */
+            color: #b91c1c; /* Dark red text */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 500;
+            display: none; /* Hidden by default */
+            width: 100%;
+        }
+        .icon {
+            width: 24px;
+            height: 24px;
+        }
+        .listening-indicator {
+            width: 12px;
+            height: 12px;
+            background-color: #ef4444; /* Red for listening */
+            border-radius: 50%;
+            animation: pulse 1.5s infinite ease-in-out;
+            display: none; /* Hidden by default */
+        }
+        .listening-indicator.active {
+            display: block;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.8); opacity: 0.7; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 10px;
+            }
+            .status-display {
+                font-size: 1rem;
+            }
+            .recognized-text-box, .ai-response-box {
+                font-size: 0.9rem;
+                padding: 1rem;
+                min-height: 4rem;
+                max-height: 120px;
+            }
+            .control-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            .icon {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="container flex flex-col items-center">
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-4">VoiceFlow AI</h1>
+        <p class="text-gray-700 text-lg text-center mb-6">Speak to the AI and get instant responses!</p>
+
+        <div id="messageBox" class="message-box"></div>
+
+        <div class="w-full">
+            <p class="text-gray-600 text-center text-sm mb-2">Status:</p>
+            <div id="statusDisplay" class="status-display">
+                Click the button to start speaking.
+            </div>
+        </div>
+
+        <button id="toggleListeningBtn" class="control-btn">
+            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+            <span>Start Listening</span>
+            <div id="listeningIndicator" class="listening-indicator"></div>
+        </button>
+
+        <div class="w-full">
+            <p class="text-gray-600 text-center text-sm mb-2">You Said:</p>
+            <div id="recognizedTextBox" class="recognized-text-box">
+                Your spoken words will appear here.
+            </div>
+        </div>
+
+        <div class="w-full">
+            <p class="text-gray-600 text-center text-sm mb-2">AI Response:</p>
+            <div id="aiResponseBox" class="ai-response-box">
+                AI's response will appear here.
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        const statusDisplay = document.getElementById('statusDisplay');
+        const recognizedTextBox = document.getElementById('recognizedTextBox');
+        const aiResponseBox = document.getElementById('aiResponseBox');
+        const messageBox = document.getElementById('messageBox');
+        const toggleListeningBtn = document.getElementById('toggleListeningBtn');
+        const listeningIndicator = document.getElementById('listeningIndicator');
+
+        let recognition;
+        let isListening = false;
+        let conversationHistory = []; // To maintain context for the LLM
+
+        // --- Utility Functions ---
+        function showMessage(message, type = 'info') {
+            messageBox.textContent = message;
+            messageBox.style.display = 'block';
+            if (type === 'error') {
+                messageBox.className = 'message-box bg-red-100 border-red-500 text-red-700';
+            } else if (type === 'info') {
+                messageBox.className = 'message-box bg-blue-100 border-blue-500 text-blue-700';
+            } else if (type === 'success') {
+                messageBox.className = 'message-box bg-green-100 border-green-500 text-green-700';
+            }
+            console.log(`[MESSAGE] ${message}`);
+        }
+
+        function setButtonState(listening) {
+            isListening = listening;
+            if (isListening) {
+                toggleListeningBtn.innerHTML = `
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <span>Stop Listening</span>
+                    <div id="listeningIndicator" class="listening-indicator active"></div>
+                `;
+                toggleListeningBtn.classList.remove('bg-emerald-500');
+                toggleListeningBtn.classList.add('bg-red-500');
+                statusDisplay.textContent = "Listening...";
+                // Re-get the indicator element after changing innerHTML
+                listeningIndicator = document.getElementById('listeningIndicator');
+                listeningIndicator.classList.add('active');
+            } else {
+                toggleListeningBtn.innerHTML = `
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    <span>Start Listening</span>
+                    <div id="listeningIndicator" class="listening-indicator"></div>
+                `;
+                toggleListeningBtn.classList.remove('bg-red-500');
+                toggleListeningBtn.classList.add('bg-emerald-500');
+                statusDisplay.textContent = "Click the button to start speaking.";
+                listeningIndicator.classList.remove('active');
+            }
+            // Re-get the indicator element after changing innerHTML
+            listeningIndicator = document.getElementById('listeningIndicator');
+        }
+
+        // --- Web Speech API (Speech Recognition) ---
+        function initializeSpeechRecognition() {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                showMessage("Your browser does not support Web Speech API. Please use Chrome, Edge, or a compatible browser.", "error");
+                toggleListeningBtn.disabled = true;
+                return;
+            }
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = false; // Listen for a single utterance
+            recognition.interimResults = false; // Only return final results
+            recognition.lang = 'en-US'; // Set language
+
+            recognition.onstart = () => {
+                setButtonState(true);
+                recognizedTextBox.textContent = "Listening...";
+                aiResponseBox.textContent = "Thinking...";
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                recognizedTextBox.textContent = transcript;
+                console.log("[Speech Recognition] Recognized:", transcript);
+                processSpeechWithGemini(transcript);
+            };
+
+            recognition.onend = () => {
+                if (isListening) { // If it ended but we intended to keep listening (e.g., for continuous mode)
+                    // For single utterance mode, onend means it's done.
+                    // If you wanted continuous, you'd call recognition.start() here again.
+                }
+                setButtonState(false);
+                statusDisplay.textContent = "Processing your request...";
+            };
+
+            recognition.onerror = (event) => {
+                console.error("[Speech Recognition] Error:", event.error);
+                setButtonState(false);
+                if (event.error === 'not-allowed') {
+                    showMessage("Microphone access denied. Please allow microphone permissions in your browser settings.", "error");
+                } else if (event.error === 'no-speech') {
+                    showMessage("No speech detected. Please try speaking louder or clearer.", "info");
+                    aiResponseBox.textContent = "No speech detected. Please try again.";
+                } else {
+                    showMessage(`Speech recognition error: ${event.error}`, "error");
+                }
+                recognizedTextBox.textContent = "Error during recognition.";
+                aiResponseBox.textContent = "Error during recognition.";
+            };
+        }
+
+        // --- Gemini API Call ---
+        async function processSpeechWithGemini(text) {
+            aiResponseBox.textContent = "Thinking...";
+            toggleListeningBtn.disabled = true; // Disable button while processing
+
+            // Add user's query to conversation history
+            conversationHistory.push({ role: "user", parts: [{ text: text }] });
+
+            const payload = { contents: conversationHistory };
+            const apiKey = ""; // Canvas will inject this. DO NOT change this.
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                console.log("[Gemini API] Raw response:", result);
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const aiResponseText = result.candidates[0].content.parts[0].text;
+                    aiResponseBox.textContent = aiResponseText;
+                    console.log("[Gemini API] AI Response:", aiResponseText);
+                    speakText(aiResponseText); // Speak the AI's response
+
+                    // Add AI's response to conversation history
+                    conversationHistory.push({ role: "model", parts: [{ text: aiResponseText }] });
+
+                } else {
+                    console.error("Gemini API response structure unexpected or empty content:", result);
+                    aiResponseBox.textContent = "AI could not generate a response. Please try again.";
+                    showMessage("AI response error. Check console for details.", "error");
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                aiResponseBox.textContent = "Failed to get AI response. Network error or API issue.";
+                showMessage("Network error during AI call. Check console.", "error");
+            } finally {
+                toggleListeningBtn.disabled = false; // Re-enable button
+                statusDisplay.textContent = "Ready to listen again.";
+            }
+        }
+
+        // --- Web Speech API (Speech Synthesis - Text-to-Speech) ---
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US'; // Match language
+                window.speechSynthesis.speak(utterance);
+                console.log("[Text-to-Speech] Speaking:", text);
+            } else {
+                console.warn("Text-to-Speech not supported in this browser.");
+            }
+        }
+
+        // --- Event Listener for Button ---
+        toggleListeningBtn.addEventListener('click', () => {
+            if (isListening) {
+                recognition.stop();
+                setButtonState(false);
+            } else {
+                try {
+                    recognition.start();
+                } catch (e) {
+                    console.error("Recognition start error:", e);
+                    showMessage("Failed to start listening. Microphone might be in use or permissions are not granted.", "error");
+                    setButtonState(false);
+                }
+            }
+        });
+
+        // --- Initialization on Window Load ---
+        window.onload = () => {
+            console.log("[App Init] Initializing VoiceFlow AI.");
+            initializeSpeechRecognition();
+            // Initial state for the button
+            setButtonState(false);
+        };
+    </script>
+</body>
+</html>

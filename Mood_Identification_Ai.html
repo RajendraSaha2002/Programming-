@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodTune AI</title>
+    <!-- Tailwind CSS for basic styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #e2e8f0; /* Light blue-gray background */
+            color: #2d3748; /* Darker text */
+            overflow: hidden; /* Prevent scrollbars */
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 900px; /* Max width for responsiveness */
+            margin: 20px auto;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+            background-color: #ffffff;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        video {
+            width: 100%;
+            height: auto;
+            border-radius: 1rem; /* Rounded corners for video */
+            transform: scaleX(-1); /* Mirror the video feed */
+            background-color: #000; /* Black background for video area */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 1rem; /* Match video border-radius */
+            pointer-events: none; /* Allow clicks to pass through canvas */
+            transform: scaleX(-1); /* Mirror the canvas drawing to match video */
+        }
+        .message-box {
+            background-color: #e0f7fa; /* Light cyan background */
+            border: 1px solid #00bcd4; /* Cyan border */
+            color: #006064; /* Dark cyan text */
+            padding: 1rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            font-weight: 500;
+            display: none; /* Hidden by default */
+            width: 100%;
+        }
+        .emotion-display {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #4a5568; /* Dark gray */
+            text-align: center;
+            min-height: 2.5rem; /* Ensure consistent height */
+        }
+        .suggestion-box {
+            background-color: #edf2f7; /* Lighter gray background */
+            border: 1px solid #cbd5e0; /* Gray border */
+            color: #4a5568; /* Dark gray text */
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            font-size: 1.1rem;
+            min-height: 6rem; /* Ensure consistent height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .generate-btn {
+            background-color: #4f46e5; /* Indigo */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+        }
+        .generate-btn:hover {
+            background-color: #4338ca; /* Darker indigo */
+            transform: translateY(-1px);
+        }
+        .generate-btn:active {
+            transform: translateY(1px);
+        }
+        .generate-btn:disabled {
+            background-color: #a5b4fc; /* Lighter indigo for disabled */
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+                margin: 10px;
+            }
+            .emotion-display {
+                font-size: 1.5rem;
+            }
+            .suggestion-box {
+                font-size: 1rem;
+                min-height: 5rem;
+            }
+            .generate-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="container flex flex-col items-center">
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-4">MoodTune AI</h1>
+        <p class="text-gray-700 text-lg text-center mb-6">Let AI read your mood and suggest some tunes or content!</p>
+
+        <div class="relative w-full max-w-lg aspect-video bg-gray-900 rounded-xl overflow-hidden">
+            <video id="video" autoplay muted playsinline class="absolute inset-0 w-full h-full object-cover"></video>
+            <canvas id="overlayCanvas" class="absolute inset-0"></canvas>
+        </div>
+
+        <div id="messageBox" class="message-box"></div>
+
+        <div class="w-full">
+            <p class="text-gray-600 text-center text-sm mb-2">Detected Mood:</p>
+            <div id="emotionDisplay" class="emotion-display">
+                Looking for your face...
+            </div>
+        </div>
+
+        <button id="generateSuggestionBtn" class="generate-btn">Generate New Suggestion ✨</button>
+
+        <div class="w-full">
+            <p class="text-gray-600 text-center text-sm mb-2">MoodTune Suggestion:</p>
+            <div id="suggestionBox" class="suggestion-box">
+                Click "Generate New Suggestion" to get a recommendation!
+            </div>
+        </div>
+    </div>
+
+    <!-- Face-API.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+
+    <script type="module">
+        const video = document.getElementById('video');
+        const overlayCanvas = document.getElementById('overlayCanvas');
+        const emotionDisplay = document.getElementById('emotionDisplay');
+        const suggestionBox = document.getElementById('suggestionBox');
+        const messageBox = document.getElementById('messageBox');
+        const generateSuggestionBtn = document.getElementById('generateSuggestionBtn');
+
+        let displaySize;
+        let videoInitialized = false;
+        let currentDetectedEmotion = 'neutral'; // Store the last detected emotion
+
+        // Function to show messages to the user
+        function showMessage(message, type = 'info') {
+            messageBox.textContent = message;
+            messageBox.style.display = 'block';
+            if (type === 'error') {
+                messageBox.className = 'message-box bg-red-100 border-red-500 text-red-700';
+            } else if (type === 'info') {
+                messageBox.className = 'message-box bg-blue-100 border-blue-500 text-blue-700';
+            } else if (type === 'success') {
+                messageBox.className = 'message-box bg-green-100 border-green-500 text-green-700';
+            }
+        }
+
+        // Load face-api.js models for face detection, landmarks, and expressions
+        async function loadModels() {
+            showMessage('Loading AI models for face and emotion detection...', 'info');
+            try {
+                // IMPORTANT: These models need to be available at the '/models' path
+                // relative to your HTML file. In a real setup, you'd host them.
+                await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
+                await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
+                await faceapi.nets.faceExpressionNet.loadFromUri('/models');
+                showMessage('Models loaded successfully! Starting webcam...', 'success');
+                // Hide message after a short delay
+                setTimeout(() => messageBox.style.display = 'none', 3000);
+            } catch (error) {
+                console.error('Error loading models:', error);
+                showMessage('Failed to load AI models. Please ensure the "/models" folder is present and accessible.', 'error');
+            }
+        }
+
+        // Start webcam stream
+        async function startVideo() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                video.addEventListener('loadeddata', () => {
+                    // Set canvas dimensions to match video dimensions
+                    displaySize = { width: video.videoWidth, height: video.videoHeight };
+                    faceapi.matchDimensions(overlayCanvas, displaySize);
+                    videoInitialized = true;
+                    showMessage('Webcam started. Looking for your emotions...', 'info');
+                    // Start detection loop after video is ready
+                    detectEmotion();
+                });
+            } catch (err) {
+                console.error('Error accessing webcam:', err);
+                showMessage('Failed to access webcam. Please ensure camera permissions are granted.', 'error');
+            }
+        }
+
+        // Function to get a suggestion based on the detected emotion using Gemini API
+        async function getGeminiSuggestionForEmotion(emotion) {
+            generateSuggestionBtn.disabled = true; // Disable button during generation
+            suggestionBox.textContent = "Generating suggestion ✨...";
+
+            let promptText = "";
+            switch (emotion) {
+                case 'happy':
+                    promptText = "Suggest a very short, upbeat song or activity recommendation for someone feeling joyful. Keep it concise, one sentence.";
+                    break;
+                case 'neutral':
+                    promptText = "Suggest a very short, calming song or relaxed activity recommendation for someone feeling neutral. Keep it concise, one sentence.";
+                    break;
+                case 'sad':
+                    promptText = "Suggest a very short, comforting song or gentle activity recommendation for someone feeling sad. Keep it concise, one sentence.";
+                    break;
+                case 'angry':
+                    promptText = "Suggest a very short, high-energy song or a stress-relieving activity recommendation for someone feeling angry. Keep it concise, one sentence.";
+                    break;
+                case 'surprised':
+                    promptText = "Suggest a very short, exciting song or an intriguing activity recommendation for someone feeling surprised. Keep it concise, one sentence.";
+                    break;
+                case 'disgusted':
+                    promptText = "Suggest a very short, refreshing song or a lighthearted activity recommendation for someone feeling disgusted. Keep it concise, one sentence.";
+                    break;
+                case 'fearful':
+                    promptText = "Suggest a very short, reassuring song or a calming activity recommendation for someone feeling fearful. Keep it concise, one sentence.";
+                    break;
+                default:
+                    return "No specific mood detected yet. Try adjusting your face!";
+            }
+
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: promptText }] });
+            const payload = { contents: chatHistory };
+            const apiKey = ""; // Canvas will inject this
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    suggestionBox.textContent = text;
+                } else {
+                    console.error("Gemini API response structure unexpected:", result);
+                    suggestionBox.textContent = "Could not generate a suggestion. Please try again.";
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                suggestionBox.textContent = "Failed to get a suggestion. Network error or API issue.";
+            } finally {
+                generateSuggestionBtn.disabled = false; // Re-enable button
+            }
+        }
+
+        // Main emotion detection loop
+        async function detectEmotion() {
+            if (!videoInitialized || !faceapi.nets.tinyFaceDetector.isLoaded || !faceapi.nets.faceLandmark68Net.isLoaded || !faceapi.nets.faceExpressionNet.isLoaded) {
+                requestAnimationFrame(detectEmotion); // Keep trying until models and video are initialized
+                return;
+            }
+
+            const detections = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
+                .withFaceLandmarks()
+                .withFaceExpressions();
+
+            // Clear canvas (we're not drawing detections visually, but it's good practice)
+            const context = overlayCanvas.getContext('2d');
+            context.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+
+            if (detections) {
+                // Resize detection results to match canvas display size
+                const resizedDetections = faceapi.resizeResults(detections, displaySize);
+
+                // Get the expressions object
+                const expressions = resizedDetections.expressions;
+
+                // Find the emotion with the highest confidence score
+                const dominantEmotion = Object.keys(expressions).reduce((a, b) => expressions[a] > expressions[b] ? a : b);
+                const confidence = expressions[dominantEmotion];
+
+                emotionDisplay.textContent = `${dominantEmotion.charAt(0).toUpperCase() + dominantEmotion.slice(1)} (${(confidence * 100).toFixed(1)}%)`;
+                currentDetectedEmotion = dominantEmotion; // Update the current detected emotion
+
+                // Optional: Draw face box and expressions for debugging
+                // faceapi.draw.drawDetections(overlayCanvas, resizedDetections);
+                // faceapi.draw.drawFaceExpressions(overlayCanvas, resizedDetections, 0.05);
+
+            } else {
+                emotionDisplay.textContent = "No face detected...";
+                currentDetectedEmotion = 'neutral'; // Default to neutral if no face
+            }
+
+            // Continue the detection loop
+            requestAnimationFrame(detectEmotion);
+        }
+
+        // Event listener for the "Generate New Suggestion" button
+        generateSuggestionBtn.addEventListener('click', () => {
+            getGeminiSuggestionForEmotion(currentDetectedEmotion);
+        });
+
+
+        // Initialize on window load
+        window.onload = async function() {
+            await loadModels();
+            await startVideo();
+
+            // Handle window resizing to adjust canvas dimensions
+            window.addEventListener('resize', () => {
+                if (videoInitialized) {
+                    displaySize = { width: video.videoWidth, height: video.videoHeight };
+                    faceapi.matchDimensions(overlayCanvas, displaySize);
+                }
+            });
+        };
+    </script>
+</body>
+</html>

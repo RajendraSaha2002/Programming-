@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Storyteller AI</title>
+    <!-- Tailwind CSS for basic styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f0f8fa; /* Light blue-gray background */
+            color: #2c3e50; /* Dark text */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 800px; /* Max width for responsiveness */
+            margin: 20px auto;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* Stronger shadow */
+            background-color: #ffffff;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .story-display-box {
+            background-color: #e0f2f7; /* Light cyan background */
+            border: 1px solid #a7d9ed; /* Cyan border */
+            color: #2b6cb0; /* Dark blue text */
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: left;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            min-height: 200px; /* Ensure visible area */
+            max-height: 400px; /* Limit height and add scroll */
+            overflow-y: auto;
+            width: 100%;
+            white-space: pre-wrap; /* Preserve whitespace and wrap text */
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        .user-input-area {
+            width: 100%;
+        }
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid #cbd5e0;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            min-height: 100px;
+            resize: vertical; /* Allow vertical resizing */
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #3b82f6; /* Blue focus */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        .control-btn {
+            background-color: #3b82f6; /* Blue */
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .control-btn:hover {
+            background-color: #2563eb; /* Darker blue */
+            transform: translateY(-1px);
+        }
+        .control-btn:active {
+            transform: translateY(1px);
+        }
+        .control-btn:disabled {
+            background-color: #93c5fd; /* Lighter blue for disabled */
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .message-box {
+            background-color: #ffe0b2; /* Light orange background */
+            border: 1px solid #ff9800; /* Orange border */
+            color: #e65100; /* Dark orange text */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 500;
+            display: none; /* Hidden by default */
+            width: 100%;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-left-color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 0.5rem;
+            display: none; /* Hidden by default */
+        }
+        .loading-spinner.active {
+            display: inline-block;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 10px;
+            }
+            .story-display-box {
+                font-size: 1rem;
+                padding: 1rem;
+                min-height: 150px;
+                max-height: 300px;
+            }
+            textarea {
+                min-height: 80px;
+            }
+            .control-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="container flex flex-col items-center">
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Interactive Storyteller AI</h1>
+        <p class="text-gray-700 text-lg text-center mb-6">Start a story, and let the AI help you continue it!</p>
+
+        <div id="messageBox" class="message-box"></div>
+
+        <div class="w-full">
+            <p class="text-gray-600 text-sm mb-2">The Story So Far:</p>
+            <div id="storyDisplayBox" class="story-display-box">
+                Once upon a time, in a land far, far away...
+            </div>
+        </div>
+
+        <div class="user-input-area">
+            <p class="text-gray-600 text-sm mb-2">Your next input (optional, to guide the AI):</p>
+            <textarea id="userInput" placeholder="e.g., 'Suddenly, a dragon appeared...' or leave blank for AI to continue freely."></textarea>
+        </div>
+
+        <button id="continueStoryBtn" class="control-btn">
+            Continue Story
+            <span id="loadingSpinner" class="loading-spinner"></span>
+        </button>
+
+        <button id="resetStoryBtn" class="control-btn bg-gray-500 hover:bg-gray-600 ml-4">
+            Reset Story
+        </button>
+    </div>
+
+    <script type="module">
+        const storyDisplayBox = document.getElementById('storyDisplayBox');
+        const userInput = document.getElementById('userInput');
+        const continueStoryBtn = document.getElementById('continueStoryBtn');
+        const resetStoryBtn = document.getElementById('resetStoryBtn');
+        const messageBox = document.getElementById('messageBox');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
+        // Initialize story with a starting sentence
+        let storyHistory = [{ role: "model", parts: [{ text: "Once upon a time, in a land far, far away..." }] }];
+        storyDisplayBox.textContent = storyHistory[0].parts[0].text;
+
+        // --- Utility Functions ---
+        function showMessage(message, type = 'info') {
+            messageBox.textContent = message;
+            messageBox.style.display = 'block';
+            if (type === 'error') {
+                messageBox.className = 'message-box bg-red-100 border-red-500 text-red-700';
+            } else if (type === 'info') {
+                messageBox.className = 'message-box bg-blue-100 border-blue-500 text-blue-700';
+            } else if (type === 'success') {
+                messageBox.className = 'message-box bg-green-100 border-green-500 text-green-700';
+            } else if (type === 'warning') {
+                messageBox.className = 'message-box bg-yellow-100 border-yellow-500 text-yellow-700';
+            }
+            console.log(`[MESSAGE] ${message}`);
+        }
+
+        function setLoading(isLoading) {
+            continueStoryBtn.disabled = isLoading;
+            resetStoryBtn.disabled = isLoading;
+            if (isLoading) {
+                loadingSpinner.classList.add('active');
+                showMessage('Generating next part of the story...', 'info');
+            } else {
+                loadingSpinner.classList.remove('active');
+                messageBox.style.display = 'none'; // Hide message when done
+            }
+        }
+
+        // --- Gemini API Call for Story Continuation ---
+        async function continueStory() {
+            setLoading(true);
+
+            const userText = userInput.value.trim();
+            if (userText) {
+                // Add user's input to the story history
+                storyHistory.push({ role: "user", parts: [{ text: userText }] });
+            }
+
+            // Construct the prompt for the LLM
+            // We'll tell it to continue the story based on the history
+            const prompt = "Continue the following story. Keep your continuation to 2-4 sentences, adding interesting plot developments or character actions. Do not start with 'The story continues...' or similar phrases. Just provide the next part of the narrative.";
+
+            // Create the full chat history including the system instruction and current story
+            const fullChatHistory = [
+                { role: "user", parts: [{ text: prompt }] }, // System instruction for the AI
+                ...storyHistory // The ongoing conversation/story
+            ];
+
+            const payload = { contents: fullChatHistory };
+            const apiKey = ""; // Canvas will inject this. DO NOT change this.
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error("Gemini API HTTP Error:", response.status, errorData);
+                    showMessage(`API Error: ${errorData.error.message || response.statusText}`, 'error');
+                    return;
+                }
+
+                const result = await response.json();
+                console.log("[Gemini API] Raw response:", result);
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const aiGeneratedText = result.candidates[0].content.parts[0].text.trim();
+
+                    // Add AI's generated text to the story history
+                    storyHistory.push({ role: "model", parts: [{ text: aiGeneratedText }] });
+
+                    // Update the display box
+                    storyDisplayBox.textContent += "\n\n" + aiGeneratedText;
+                    storyDisplayBox.scrollTop = storyDisplayBox.scrollHeight; // Scroll to bottom
+                    userInput.value = ''; // Clear user input
+                    showMessage('Story continued!', 'success');
+                } else {
+                    console.error("Gemini API response structure unexpected or empty content:", result);
+                    showMessage('AI could not continue the story. Please try again.', 'warning');
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                showMessage('Failed to get AI response. Network error or API issue. Check console.', 'error');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // --- Reset Story Function ---
+        function resetStory() {
+            storyHistory = [{ role: "model", parts: [{ text: "Once upon a time, in a land far, far away..." }] }];
+            storyDisplayBox.textContent = storyHistory[0].parts[0].text;
+            userInput.value = '';
+            showMessage('Story reset!', 'info');
+            setTimeout(() => messageBox.style.display = 'none', 3000);
+        }
+
+        // --- Event Listeners ---
+        continueStoryBtn.addEventListener('click', continueStory);
+        resetStoryBtn.addEventListener('click', resetStory);
+
+        // Allow pressing Enter in textarea to continue story
+        userInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && !event.shiftKey) { // Shift+Enter for new line
+                event.preventDefault(); // Prevent default Enter behavior (new line)
+                if (!continueStoryBtn.disabled) {
+                    continueStory();
+                }
+            }
+        });
+
+        // --- Initialization ---
+        window.onload = () => {
+            console.log("[App Init] Interactive Storyteller AI loaded.");
+            showMessage("Start by clicking 'Continue Story' or type your own beginning!", "info");
+            setTimeout(() => messageBox.style.display = 'none', 5000);
+        };
+    </script>
+</body>
+</html>

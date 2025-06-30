@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Face Tracking Cursor</title>
+    <!-- Tailwind CSS for basic styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: #f0f4f8; /* Light blue-gray background */
+        color: #334155; /* Darker text */
+        overflow: hidden; /* Prevent scrollbars */
+      }
+      .container {
+        position: relative;
+        width: 100%;
+        max-width: 800px; /* Max width for responsiveness */
+        margin: 20px auto;
+        border-radius: 1rem; /* Rounded corners */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        background-color: #ffffff;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      video {
+        width: 100%;
+        height: auto;
+        border-radius: 0.75rem; /* Rounded corners for video */
+        transform: scaleX(-1); /* Mirror the video feed */
+        background-color: #000; /* Black background for video area */
+      }
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0.75rem; /* Match video border-radius */
+        pointer-events: none; /* Allow clicks to pass through canvas */
+        transform: scaleX(-1); /* Mirror the canvas drawing to match video */
+      }
+      #cursor-circle {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-color: #ef4444; /* Red color for cursor */
+        border-radius: 50%;
+        transform: translate(
+          -50%,
+          -50%
+        ); /* Center the circle on the cursor point */
+        pointer-events: none; /* Ensure it doesn't interfere with other elements */
+        z-index: 10; /* Above other elements */
+        box-shadow: 0 0 15px rgba(239, 68, 68, 0.6); /* Glow effect */
+      }
+      .message-box {
+        background-color: #fef2f2; /* Light red background */
+        border: 1px solid #ef4444; /* Red border */
+        color: #b91c1c; /* Dark red text */
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin-top: 1rem;
+        text-align: center;
+        font-weight: 500;
+        display: none; /* Hidden by default */
+      }
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+          margin: 10px;
+        }
+        #cursor-circle {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body class="p-4">
+    <div class="container flex flex-col items-center gap-4">
+      <h1 class="text-3xl font-bold text-gray-800 mb-4">
+        AI Face Tracking Cursor
+      </h1>
+      <p class="text-gray-600 text-center mb-6">
+        Move your head to control the red circle. Ensure good lighting for
+        better tracking!
+      </p>
+
+      <div
+        class="relative w-full max-w-lg aspect-video bg-gray-900 rounded-xl overflow-hidden"
+      >
+        <video
+          id="video"
+          autoplay
+          muted
+          playsinline
+          class="absolute inset-0 w-full h-full object-cover"
+        ></video>
+        <canvas id="overlayCanvas" class="absolute inset-0"></canvas>
+        <div id="cursor-circle"></div>
+      </div>
+
+      <div id="messageBox" class="message-box"></div>
+    </div>
+
+    <!-- Face-API.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+
+    <script type="module">
+      const video = document.getElementById("video");
+      const overlayCanvas = document.getElementById("overlayCanvas");
+      const cursorCircle = document.getElementById("cursor-circle");
+      const messageBox = document.getElementById("messageBox");
+      let displaySize;
+      let videoInitialized = false;
+
+      // Function to show messages to the user
+      function showMessage(message, type = "error") {
+        messageBox.textContent = message;
+        messageBox.style.display = "block";
+        if (type === "error") {
+          messageBox.className =
+            "message-box bg-red-100 border-red-500 text-red-700";
+        } else if (type === "info") {
+          messageBox.className =
+            "message-box bg-blue-100 border-blue-500 text-blue-700";
+        }
+      }
+
+      // Load face-api.js models
+      async function loadModels() {
+        showMessage("Loading AI models...", "info");
+        try {
+          // Ensure the models directory is correctly specified.
+          // In a production environment, you would host these models on your server.
+          await faceapi.nets.tinyFaceDetector.loadFromUri("/models");
+          await faceapi.nets.faceLandmark68Net.loadFromUri("/models");
+          showMessage("Models loaded successfully!", "info");
+          // Hide message after a short delay
+          setTimeout(() => (messageBox.style.display = "none"), 3000);
+        } catch (error) {
+          console.error("Error loading models:", error);
+          showMessage(
+            "Failed to load AI models. Please check your network connection and ensure models are available.",
+            "error"
+          );
+        }
+      }
+
+      // Start webcam stream
+      async function startVideo() {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+          });
+          video.srcObject = stream;
+          video.addEventListener("loadeddata", () => {
+            // Set canvas dimensions to match video dimensions
+            displaySize = {
+              width: video.videoWidth,
+              height: video.videoHeight,
+            };
+            faceapi.matchDimensions(overlayCanvas, displaySize);
+            videoInitialized = true;
+            showMessage("Webcam started. Looking for your face...", "info");
+            // Start detection loop after video is ready
+            detectFace();
+          });
+        } catch (err) {
+          console.error("Error accessing webcam:", err);
+          showMessage(
+            "Failed to access webcam. Please ensure camera permissions are granted.",
+            "error"
+          );
+        }
+      }
+
+      // Main face detection loop
+      async function detectFace() {
+        if (!videoInitialized) {
+          requestAnimationFrame(detectFace); // Keep trying until video is initialized
+          return;
+        }
+
+        const detections = await faceapi
+          .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
+          .withFaceLandmarks();
+
+        // Clear canvas for new drawing
+        const context = overlayCanvas.getContext("2d");
+        context.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+
+        if (detections) {
+          // Resize detection results to match canvas display size
+          const resizedDetections = faceapi.resizeResults(
+            detections,
+            displaySize
+          );
+
+          // Draw face landmarks (optional, for visualization)
+          // faceapi.draw.drawFaceLandmarks(overlayCanvas, resizedDetections);
+
+          // Get the nose tip landmark (landmark 30 in 68-point model)
+          // The landmark coordinates are relative to the video frame.
+          const nose = resizedDetections.landmarks.getNose()[3]; // Get the tip of the nose
+
+          // Map nose position to cursor position
+          // We need to invert the X-axis because the video is mirrored.
+          // The canvas is also mirrored, so the drawing coordinates should be correct relative to the mirrored video.
+          const cursorX = nose.x;
+          const cursorY = nose.y;
+
+          // Update the cursor circle position
+          // The cursor circle is positioned relative to the container, not the canvas.
+          // So, we need to convert the canvas coordinates to container coordinates.
+          // The canvas is absolutely positioned within the container.
+          const videoRect = video.getBoundingClientRect();
+          const containerRect = video.parentElement.getBoundingClientRect(); // Get the parent div's rect
+
+          // Calculate position relative to the container
+          // The video and canvas are mirrored, so the effective X position for the cursor needs to be adjusted
+          // from the right edge of the video, not the left.
+          const actualCursorX = videoRect.width - cursorX; // Invert X for non-mirrored display
+          const actualCursorY = cursorY;
+
+          cursorCircle.style.left = `${actualCursorX}px`;
+          cursorCircle.style.top = `${actualCursorY}px`;
+          cursorCircle.style.display = "block"; // Show cursor once face is detected
+        } else {
+          cursorCircle.style.display = "none"; // Hide cursor if no face is detected
+        }
+
+        // Continue the detection loop
+        requestAnimationFrame(detectFace);
+      }
+
+      // Initialize on window load
+      window.onload = async function () {
+        await loadModels();
+        await startVideo();
+
+        // Handle window resizing to adjust canvas dimensions
+        window.addEventListener("resize", () => {
+          if (videoInitialized) {
+            displaySize = {
+              width: video.videoWidth,
+              height: video.videoHeight,
+            };
+            faceapi.matchDimensions(overlayCanvas, displaySize);
+          }
+        });
+      };
+    </script>
+  </body>
+</html>
