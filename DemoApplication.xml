@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!--
+        This is the parent POM for Spring Boot applications.
+        It provides dependency management and default configurations.
+    -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.1</version> <!-- Use a recent stable version -->
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>com.example</groupId>
+    <artifactId>demo-api</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>demo-api</name>
+    <description>Demo project for Spring Boot REST API</description>
+
+    <properties>
+        <java.version>17</java.version> <!-- Recommended Java version for recent Spring Boot -->
+    </properties>
+
+    <dependencies>
+        <!--
+            Spring Boot Starter Web:
+            This dependency brings in all necessary components for building web applications,
+            including a Tomcat embedded server, Spring MVC, and JSON processing.
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot Starter Test:
+            Includes dependencies for testing Spring Boot applications (e.g., JUnit, Mockito).
+            Typically used for unit and integration tests.
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--
+                Spring Boot Maven Plugin:
+                Provides Spring Boot support in Maven, allowing you to package executable JARs
+                and run the application directly from Maven.
+            -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
