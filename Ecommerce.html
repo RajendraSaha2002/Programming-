@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mini Shop — Demo E‑commerce Frontend</title>
+  <link rel="stylesheet" href="Ecommerce.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">Mini Shop</div>
+    <div class="search-area">
+      <input id="search" type="search" placeholder="Search products..." aria-label="Search products" />
+      <select id="sort" aria-label="Sort products">
+        <option value="relevance">Relevance</option>
+        <option value="price-asc">Price: Low → High</option>
+        <option value="price-desc">Price: High → Low</option>
+        <option value="name-asc">Name A → Z</option>
+      </select>
+    </div>
+    <button id="cart-btn" class="cart-btn" aria-haspopup="dialog" aria-expanded="false">
+      Cart (<span id="cart-count">0</span>)
+    </button>
+  </header>
+
+  <main class="content" id="content">
+    <section class="products" id="products" aria-live="polite"></section>
+  </main>
+
+  <!-- Product detail modal -->
+  <div id="product-modal" class="modal" role="dialog" aria-hidden="true" aria-labelledby="pm-title">
+    <div class="modal-panel">
+      <button class="modal-close" id="pm-close" aria-label="Close product details">✕</button>
+      <div class="pm-body">
+        <img id="pm-image" alt="" />
+        <div class="pm-info">
+          <h2 id="pm-title"></h2>
+          <p id="pm-desc"></p>
+          <div class="pm-price" id="pm-price"></div>
+          <label>
+            Quantity
+            <input id="pm-qty" type="number" min="1" value="1" />
+          </label>
+          <div class="pm-actions">
+            <button id="pm-add" class="btn primary">Add to Cart</button>
+            <button id="pm-buy" class="btn">Buy Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart drawer/dialog -->
+  <div id="cart-drawer" class="cart-drawer" role="dialog" aria-hidden="true" aria-labelledby="cart-title">
+    <div class="cart-panel">
+      <header class="cart-head">
+        <h2 id="cart-title">Your Cart</h2>
+        <button id="cart-close" class="modal-close" aria-label="Close cart">✕</button>
+      </header>
+      <ul id="cart-list" class="cart-list" aria-live="polite"></ul>
+      <div class="cart-footer">
+        <div class="totals">
+          <div>Subtotal: <strong id="cart-subtotal">₦0.00</strong></div>
+          <div>Items: <span id="cart-items">0</span></div>
+        </div>
+        <div class="cart-actions">
+          <button id="clear-cart" class="btn muted">Clear</button>
+          <button id="checkout" class="btn primary">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <small>Demo e‑commerce frontend • Static/demo only • No real payments</small>
+  </footer>
+
+  <script src="Ecommerce.js"></script>
+</body>
+</html>

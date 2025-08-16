@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Map App — Leaflet Demo</title>
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-sA+e2Gk6kq3bY3g6GfH8rpa2qQ0YkKXl0v2X6x0zY3s="
+    crossorigin=""
+  />
+
+  <!-- MarkerCluster CSS (optional, included) -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
+  />
+
+  <link rel="stylesheet" href="Map_App.css" />
+</head>
+<body>
+  <header class="top">
+    <h1>Map App (Leaflet)</h1>
+    <div class="controls">
+      <input id="search-input" type="search" placeholder="Search place (press Enter)" />
+      <button id="locate-btn">Locate me</button>
+      <button id="export-btn">Export GeoJSON</button>
+      <label class="import-label">
+        <input id="import-file" type="file" accept=".json,application/geo+json" hidden />
+        <button id="import-btn" class="muted">Import</button>
+      </label>
+      <button id="clear-btn" class="danger">Clear markers</button>
+    </div>
+  </header>
+
+  <main>
+    <aside class="sidebar">
+      <h2>Markers</h2>
+      <div id="marker-list" class="marker-list" aria-live="polite"></div>
+      <small>Click map to add a marker. Click a marker to edit/delete.</small>
+    </aside>
+
+    <div id="map" class="map" role="application" aria-label="Map"></div>
+  </main>
+
+  <footer class="foot">
+    <small>Tiles: OpenStreetMap. Search: Nominatim. No API key required for demo.</small>
+  </footer>
+
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-o9N1j7k6QH0g3f7b2d3y2+Yq4t8Jc2yI2s3f9k2R2o4="
+    crossorigin=""
+  ></script>
+
+  <!-- MarkerCluster JS -->
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <script src="Map_App.js"></script>
+</body>
+</html>

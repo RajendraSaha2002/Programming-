@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Micro‑Frontend Playground</title>
+  <link rel="stylesheet" href="Micro_Frontend.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Micro‑Frontend Playground</h1>
+    <div class="controls">
+      <label>
+        Add:
+        <select id="widget-select" aria-label="Choose a widget">
+          <option value="todo">Todo (module)</option>
+          <option value="chart">Mini Chart (module)</option>
+          <option value="iframe-sample">Iframe Widget (iframe)</option>
+        </select>
+      </label>
+      <button id="add-widget" class="btn">Add Widget</button>
+      <button id="save-layout" class="btn muted">Save Layout</button>
+      <button id="clear-layout" class="btn danger">Clear Layout</button>
+    </div>
+  </header>
+
+  <main class="board">
+    <aside class="sidebar">
+      <h3>Instances</h3>
+      <ul id="instances" class="instances" aria-live="polite"></ul>
+    </aside>
+
+    <section id="workspace" class="workspace" aria-live="polite">
+      <!-- widgets will be mounted here -->
+    </section>
+  </main>
+
+  <template id="widget-frame-template">
+    <article class="widget">
+      <header class="widget-header">
+        <strong class="widget-title"></strong>
+        <div class="widget-actions">
+          <button class="btn small up">↑</button>
+          <button class="btn small down">↓</button>
+          <button class="btn small msg">Msg</button>
+          <button class="btn small remove danger">✕</button>
+        </div>
+      </header>
+      <div class="widget-body"></div>
+    </article>
+  </template>
+
+  <script type="module" src="Micro_Frontend_Shell.js"></script>
+</body>
+</html>

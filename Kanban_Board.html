@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kanban Board</title>
+  <link rel="stylesheet" href="Kanban_Board.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Kanban Board</h1>
+    <div class="top-actions">
+      <button id="add-column-btn" class="btn">+ Add Column</button>
+      <button id="export-btn" class="btn muted">Export JSON</button>
+      <button id="import-btn" class="btn muted">Import JSON</button>
+      <input id="import-file" type="file" accept="application/json" style="display:none" />
+    </div>
+  </header>
+
+  <main class="board-wrap">
+    <div id="board" class="board" aria-live="polite"></div>
+  </main>
+
+  <template id="col-template">
+    <section class="column" draggable="false">
+      <header class="col-head">
+        <input class="col-title" value="Column" />
+        <div class="col-actions">
+          <button class="btn small add-card">+ Card</button>
+          <button class="btn small danger delete-col">Delete</button>
+        </div>
+      </header>
+      <ul class="card-list"></ul>
+    </section>
+  </template>
+
+  <template id="card-template">
+    <li class="card" draggable="true">
+      <div class="card-body">
+        <div class="card-title" contenteditable="true"></div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-actions">
+        <button class="btn tiny edit-desc">Desc</button>
+        <button class="btn tiny delete-card">Del</button>
+      </div>
+    </li>
+  </template>
+
+  <!-- modal for description editing -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-panel">
+      <h2>Edit Card</h2>
+      <label>
+        Title
+        <input id="modal-title" />
+      </label>
+      <label>
+        Description
+        <textarea id="modal-desc" rows="6"></textarea>
+      </label>
+      <div class="modal-actions">
+        <button id="modal-save" class="btn primary">Save</button>
+        <button id="modal-cancel" class="btn muted">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="Kanban_Board.js"></script>
+</body>
+</html>

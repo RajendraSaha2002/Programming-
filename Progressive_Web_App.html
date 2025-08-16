@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Offline Notes — PWA</title>
+
+  <link rel="manifest" href="Progressive_Web_App.json" />
+  <meta name="theme-color" content="#2563eb" />
+
+  <link rel="icon" href="Progressive_Web_App.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="Progrssive_Web_App.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Offline Notes</div>
+    <div class="actions">
+      <button id="new-note" class="btn">+ New</button>
+      <button id="install-btn" class="btn muted" hidden>Install</button>
+      <span id="status" class="status offline">Offline</span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <input id="search" type="search" placeholder="Search notes..." />
+      <ul id="notes-list" class="notes-list" aria-live="polite"></ul>
+    </aside>
+
+    <section class="editor">
+      <input id="note-title" class="title" placeholder="Title" />
+      <textarea id="note-body" class="body" placeholder="Start typing your note..."></textarea>
+
+      <div class="editor-actions">
+        <div class="meta">
+          <span id="note-updated">Not saved</span>
+        </div>
+        <div>
+          <button id="delete-note" class="btn danger" hidden>Delete</button>
+          <button id="save-note" class="btn primary">Save</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <small>Works offline. Notes are stored on your device (IndexedDB). Installable as a PWA.</small>
+  </footer>
+
+  <script src="Progressive_Web_App.js"></script>
+</body>
+</html>

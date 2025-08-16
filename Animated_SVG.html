@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Animated SVG Infographic — Example</title>
+  <link rel="stylesheet" href="Animated_SVG.css" />
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>Animated SVG Infographic — Website Traffic (Demo)</h1>
+      <p class="subtitle">Interactive SVG: animated bars, a morphing line, tooltips, play/pause and timeline control.</p>
+    </header>
+
+    <section class="controls">
+      <button id="play" class="btn">Play</button>
+      <button id="pause" class="btn hidden">Pause</button>
+      <button id="reset" class="btn muted">Reset</button>
+      <label class="range-label">Progress
+        <input id="timeline" type="range" min="0" max="100" value="0" />
+      </label>
+      <button id="export" class="btn">Export SVG</button>
+    </section>
+
+    <section class="infographic">
+      <svg id="viz" viewBox="0 0 900 420" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Animated infographic showing monthly metrics">
+        <defs>
+          <linearGradient id="gradBar" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#60a5fa"/>
+            <stop offset="100%" stop-color="#1e3a8a"/>
+          </linearGradient>
+          <linearGradient id="gradArea" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#dbeafe" />
+            <stop offset="100%" stop-color="#bfdbfe" />
+          </linearGradient>
+        </defs>
+
+        <!-- axes and labels -->
+        <g id="axes" transform="translate(60,40)">
+          <line x1="0" x2="780" y1="320" y2="320" stroke="#cbd5e1" stroke-width="1"></line>
+          <line x1="0" x2="0" y1="0" y2="320" stroke="#cbd5e1" stroke-width="1"></line>
+        </g>
+
+        <!-- bars container -->
+        <g id="bars" transform="translate(60,40)"></g>
+
+        <!-- area under line -->
+        <g id="areaGroup" transform="translate(60,40)">
+          <path id="areaPath" d="" fill="url(#gradArea)" opacity="0.9"></path>
+        </g>
+
+        <!-- line path -->
+        <g id="lineGroup" transform="translate(60,40)">
+          <path id="linePath" d="" fill="none" stroke="#ef4444" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"></path>
+          <g id="points"></g>
+        </g>
+
+        <!-- annotation -->
+        <g id="annotation" transform="translate(60,10)">
+          <text id="label" x="0" y="0" font-size="14" fill="#0f172a"></text>
+        </g>
+      </svg>
+    </section>
+
+    <section class="legend">
+      <div><span class="swatch bar"></span> Visits (bars)</div>
+      <div><span class="swatch line"></span> Conversion % (line)</div>
+    </section>
+
+    <div id="tooltip" class="tooltip" hidden></div>
+  </main>
+
+  <script src="Animated_SVG.js"></script>
+</body>
+</html>

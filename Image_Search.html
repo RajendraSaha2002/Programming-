@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Image Search (API) + Lightbox</title>
+  <link rel="stylesheet" href="Image_Search.css" />
+</head>
+<body>
+  <header class="top">
+    <h1>Image Search</h1>
+    <div class="controls">
+      <input id="search-input" type="search" placeholder="Search images (e.g. mountains, cats)" />
+      <button id="search-btn">Search</button>
+      <label class="provider">
+        Provider:
+        <select id="provider">
+          <option value="pixabay">Pixabay</option>
+          <option value="unsplash">Unsplash</option>
+        </select>
+      </label>
+      <button id="show-fav" class="muted">Favorites</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="grid" class="grid" aria-live="polite"></section>
+
+    <!-- sentinel for infinite scroll -->
+    <div id="sentinel" class="sentinel"></div>
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" hidden>
+    <button id="lb-close" class="lb-close" aria-label="Close">✕</button>
+    <img id="lb-img" src="" alt="" />
+    <div class="lb-meta">
+      <div id="lb-info" class="lb-info"></div>
+      <div class="lb-actions">
+        <a id="lb-download" class="btn" download>Download</a>
+        <button id="lb-fav" class="btn muted">♥ Favorite</button>
+      </div>
+    </div>
+  </div>
+
+  <template id="card-tmpl">
+    <figure class="card">
+      <img class="thumb" alt="" />
+      <figcaption>
+        <div class="title"></div>
+        <div class="meta"></div>
+      </figcaption>
+      <button class="fav toggle" title="Toggle favorite">♡</button>
+    </figure>
+  </template>
+
+  <script src="Image_Search.js"></script>
+</body>
+</html>

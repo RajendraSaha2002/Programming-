@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="Expense_Tracker.css" />
+</head>
+<body>
+  <main class="app" role="main">
+    <h1>Expense Tracker</h1>
+
+    <section class="summary" aria-label="Summary">
+      <div class="card">
+        <div class="label">Balance</div>
+        <div id="balance" class="amount">₦0.00</div>
+      </div>
+      <div class="card">
+        <div class="label">Income</div>
+        <div id="income" class="amount positive">₦0.00</div>
+      </div>
+      <div class="card">
+        <div class="label">Expenses</div>
+        <div id="expenses" class="amount negative">₦0.00</div>
+      </div>
+    </section>
+
+    <section class="form-section" aria-label="Add transaction">
+      <form id="tx-form">
+        <input id="desc" type="text" placeholder="Description (e.g., Salary, Coffee)" required />
+        <input id="amount" type="number" step="0.01" placeholder="Amount (positive income, negative expense)" required />
+        <div class="buttons">
+          <button id="add-btn" type="submit" class="primary">Add</button>
+          <button id="update-btn" type="button" class="hidden">Update</button>
+          <button id="cancel-btn" type="button" class="muted hidden">Cancel</button>
+        </div>
+      </form>
+      <div class="controls">
+        <label>Filter:
+          <select id="filter">
+            <option value="all">All</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+        </label>
+        <button id="export-csv" class="muted">Export CSV</button>
+        <button id="clear-all" class="danger">Clear All</button>
+      </div>
+    </section>
+
+    <section class="list-section" aria-label="Transactions">
+      <ul id="tx-list" class="tx-list" aria-live="polite"></ul>
+    </section>
+
+    <footer class="hint">
+      Tip: use positive numbers for income, negative numbers for expenses. Click an item to edit.
+    </footer>
+  </main>
+
+  <script src="Expense_Traker.js"></script>
+</body>
+</html>

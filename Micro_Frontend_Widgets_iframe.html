@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Iframe Widget (Sample)</title>
+  <style>
+    body{margin:0;font-family:Inter,system-ui,Arial;background:#fff;color:#071034}
+    .wrap{padding:12px}
+    .btn{padding:8px 10px;border-radius:6px;border:none;background:#2563eb;color:#fff;cursor:pointer}
+    .small{font-size:13px;color:#6b7280}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h3>Iframe Widget</h3>
+    <div class="small">This is an iframe-based micro frontend. It communicates with the shell via postMessage.</div>
+    <div style="margin-top:10px">
+      <button id="send" class="btn">Send message to shell</button>
+      <button id="hello" class="btn">Hello shell</button>
+    </div>
+    <pre id="log" style="margin-top:10px;background:#f1f5f9;padding:8px;border-radius:6px;height:120px;overflow:auto"></pre>
+  </div>
+
+  <script>
+    const log = document.getElementById('log');
+    function append(msg){ log.textContent = msg + '\\n' + log.textContent; }
+
+    // listen for messages from shell
+    window.addEventListener('message', (ev) => {
+      if (!ev.data) return;
+      // shell may send { __microfront_id, payload }
+      append('IN: ' + JSON.stringify(ev.data));
+      // echo back with same microfront id so shell can route
+      if (ev.data.__microfront_id) {
+        const payload = { type: 'iframe:echo', received: ev.data.payload };
+        parent.postMessage({ __microfront_id: ev.data.__microfront_id, payload }, '*');
+      }
+    });
+
+    document.getElementById('send').addEventListener('click', () => {
+      // broadcast - shell can inspect and route
+      parent.postMessage({ __microfront_broadcast: true, payload: { type:'iframe:msg', text: 'Button clicked' }}, '*');
+      append('OUT: broadcast');
+    });
+    document.getElementById('hello').addEventListener('click', () => {
+      parent.postMessage({ __microfront_id: 'iframe-sample', payload: { type:'iframe:hello', text: 'Hi shell from iframe' }}, '*');
+      append('OUT: targeted hello');
+    });
+
+    append('Iframe ready');
+  </script>
+</body>
+</html>
