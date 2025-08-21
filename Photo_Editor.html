@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Photo Editor — Canvas</title>
+  <link rel="stylesheet" href="Photo_Editor.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <h1>Photo Editor (Canvas)</h1>
+      <div class="top-actions">
+        <label class="btn file-btn">
+          Open image
+          <input id="file-input" type="file" accept="image/*" />
+        </label>
+        <button id="download" class="btn">Download</button>
+        <button id="undo" class="btn muted">Undo</button>
+        <button id="redo" class="btn muted">Redo</button>
+        <button id="reset" class="btn danger">Reset</button>
+      </div>
+    </header>
+
+    <section class="editor-area">
+      <aside class="controls">
+        <h2>Filters</h2>
+        <div class="control">
+          <label>Brightness <span id="bval">100%</span></label>
+          <input id="brightness" type="range" min="40" max="200" value="100" />
+        </div>
+        <div class="control">
+          <label>Contrast <span id="cval">100%</span></label>
+          <input id="contrast" type="range" min="40" max="200" value="100" />
+        </div>
+        <div class="control">
+          <label>Saturation <span id="sval">100%</span></label>
+          <input id="saturate" type="range" min="0" max="300" value="100" />
+        </div>
+        <div class="control presets">
+          <button id="apply-filters" class="btn">Apply</button>
+          <button id="revert-filters" class="btn muted">Revert</button>
+        </div>
+
+        <h2>Transform</h2>
+        <div class="control transform">
+          <button id="rotate-left" class="btn">Rotate ⟲</button>
+          <button id="rotate-right" class="btn">Rotate ⟳</button>
+        </div>
+
+        <h2>Crop</h2>
+        <div class="control">
+          <button id="crop-toggle" class="btn muted">Start Crop</button>
+          <button id="apply-crop" class="btn" disabled>Apply Crop</button>
+          <button id="cancel-crop" class="btn muted" disabled>Cancel Crop</button>
+        </div>
+
+        <h2>Quick fixes</h2>
+        <div class="control">
+          <button id="auto-contrast" class="btn muted">Auto Contrast</button>
+          <button id="grayscale" class="btn muted">Grayscale</button>
+        </div>
+      </aside>
+
+      <div class="canvas-wrap" id="canvas-wrap">
+        <div class="canvas-toolbar small">
+          <div id="image-info">No image loaded</div>
+        </div>
+        <div class="canvas-stage" id="canvas-stage">
+          <canvas id="editor-canvas"></canvas>
+          <canvas id="overlay-canvas"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <small>All edits happen locally in your browser. Use "Apply" to commit filter changes into the image pixels so they persist on export.</small>
+    </footer>
+  </main>
+
+  <script src="Photo_Editor.js"></script>
+</body>
+</html>

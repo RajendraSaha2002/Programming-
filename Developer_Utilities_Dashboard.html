@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Developer Utilities Dashboard</title>
+  <link rel="stylesheet" href="Developer_Utilities_Dashboard.css" />
+</head>
+<body>
+  <header class="top">
+    <h1>Developer Utilities Dashboard</h1>
+    <nav class="tabs" role="tablist" aria-label="Tools">
+      <button class="tab active" data-panel="regex" role="tab" aria-selected="true">Regex Tester</button>
+      <button class="tab" data-panel="json" role="tab">JSON Formatter</button>
+      <button class="tab" data-panel="http" role="tab">HTTP Client</button>
+      <button class="tab" data-panel="color" role="tab">Color Picker</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- Regex Tester -->
+    <section id="regex" class="panel" role="tabpanel">
+      <h2>Regex Tester</h2>
+      <label>Pattern <input id="rx-pattern" placeholder="e.g. (\d{4})-(\d{2})-(\d{2})" /></label>
+      <label>Flags <input id="rx-flags" placeholder="gimu" /></label>
+      <label>Test string <textarea id="rx-input" placeholder="Paste text to test against"></textarea></label>
+
+      <div class="row">
+        <button id="rx-test" class="btn">Test</button>
+        <button id="rx-replace-btn" class="btn muted">Replace</button>
+        <input id="rx-replace" placeholder="Replacement (use $1, $2...)" />
+        <button id="rx-copy" class="btn">Copy Matches</button>
+      </div>
+
+      <div id="rx-result" class="result" aria-live="polite"></div>
+    </section>
+
+    <!-- JSON Formatter -->
+    <section id="json" class="panel hidden" role="tabpanel">
+      <h2>JSON Formatter & Validator</h2>
+      <label>JSON input <textarea id="json-input" placeholder='{"name": "Alice", "age":30}'></textarea></label>
+
+      <div class="row">
+        <button id="json-pretty" class="btn">Pretty</button>
+        <button id="json-minify" class="btn muted">Minify</button>
+        <button id="json-validate" class="btn">Validate</button>
+        <button id="json-copy" class="btn">Copy</button>
+      </div>
+
+      <div id="json-result" class="result" aria-live="polite"></div>
+    </section>
+
+    <!-- HTTP Client -->
+    <section id="http" class="panel hidden" role="tabpanel">
+      <h2>HTTP Client (Fetch UI)</h2>
+
+      <div class="row">
+        <input id="http-url" class="wide" placeholder="https://api.example.com/endpoint" />
+        <select id="http-method">
+          <option>GET</option>
+          <option>POST</option>
+          <option>PUT</option>
+          <option>PATCH</option>
+          <option>DELETE</option>
+        </select>
+      </div>
+
+      <label>Headers (one per line: Key: Value) <textarea id="http-headers" placeholder="Content-Type: application/json"></textarea></label>
+      <label>Body <textarea id="http-body" placeholder='{"foo":"bar"}'></textarea></label>
+
+      <div class="row">
+        <button id="http-send" class="btn primary">Send</button>
+        <button id="http-clear" class="btn muted">Clear</button>
+        <button id="http-save" class="btn">Save Request</button>
+        <select id="http-saved" class="wide"></select>
+      </div>
+
+      <div id="http-meta" class="meta"></div>
+      <div id="http-response" class="result" aria-live="polite"></div>
+    </section>
+
+    <!-- Color Picker -->
+    <section id="color" class="panel hidden" role="tabpanel">
+      <h2>Color Picker & Utilities</h2>
+
+      <div class="row">
+        <input type="color" id="cp-color" value="#2563eb" />
+        <input id="cp-hex" value="#2563eb" />
+        <button id="cp-copy" class="btn">Copy Hex</button>
+      </div>
+
+      <div class="row">
+        <label>Generate CSS variables name <input id="cp-varname" placeholder="--brand" /></label>
+        <button id="cp-gen" class="btn">Generate Variables</button>
+      </div>
+
+      <div id="cp-output" class="result" aria-live="polite"></div>
+      <h3>Contrast Checker</h3>
+      <label>Background <input id="cp-bg" type="color" value="#ffffff" /></label>
+      <div id="cp-contrast" class="result small"></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <small>Developer Utilities Dashboard — small, local tools for testing and debugging. No external services required.</small>
+  </footer>
+
+  <script src="Developer_Utilities_Dashboard.js"></script>
+</body>
+</html>

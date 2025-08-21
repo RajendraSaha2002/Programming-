@@ -1,0 +1,39 @@
+:root{
+  --bg:#f7fafc;
+  --card:#fff;
+  --accent:#2563eb;
+  --muted:#64748b;
+  --danger:#ef4444;
+  --shadow:0 12px 30px rgba(2,6,23,0.06);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:#071034}
+.app{max-width:1100px;margin:24px auto;padding:16px;background:var(--card);border-radius:12px;box-shadow:var(--shadow)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.top h1{margin:0;font-size:18px}
+.controls{display:flex;gap:8px;align-items:center}
+.btn{padding:8px 10px;border-radius:8px;border:none;background:var(--accent);color:#fff;cursor:pointer}
+.btn.muted{background:#f1f5f9;color:var(--muted);border:1px solid #e6eefc}
+.btn.danger{background:var(--danger)}
+.btn.primary{background:#10b981}
+.btn.toggle{display:flex;align-items:center;gap:6px;padding:6px 8px;background:#fff;border:1px solid #e6eefc;color:var(--muted)}
+.btn.small{padding:6px 8px}
+.hidden{display:none}
+
+.stage{display:flex;gap:12px;margin-top:14px}
+.preview-wrap{position:relative;flex:1;min-height:360px;border-radius:10px;overflow:hidden;border:1px solid #eef6ff;background:#000;display:flex;align-items:center;justify-content:center}
+.preview-wrap video, .preview-wrap canvas{position:absolute;left:0;top:0;width:100%;height:100%;display:block;object-fit:contain}
+.draw{pointer-events:auto}
+.annotation-panel{width:260px;background:linear-gradient(180deg,#fff,#fbfdff);padding:12px;border-radius:10px;border:1px solid #eef6ff}
+.annotation-panel h3{margin:0 0 8px}
+.row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.clips{list-style:none;padding:0;margin:0;max-height:220px;overflow:auto}
+.clips li{padding:8px;border-radius:8px;background:#fbfdff;border:1px solid #f1f5f9;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.clip-actions button{margin-left:6px;padding:6px 8px;border-radius:6px;border:none;cursor:pointer}
+.foot{margin-top:12px;color:var(--muted);font-size:13px;text-align:center}
+
+/* small screens */
+@media (max-width:880px){
+  .stage{flex-direction:column}
+  .annotation-panel{width:100%}
+}

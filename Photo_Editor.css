@@ -1,0 +1,37 @@
+:root{
+  --bg:#f6f8fb;
+  --card:#fff;
+  --accent:#2563eb;
+  --muted:#64748b;
+  --danger:#ef4444;
+  --radius:10px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:#071034}
+.app{max-width:1100px;margin:28px auto;padding:16px;background:var(--card);border-radius:12px;box-shadow:0 12px 30px rgba(2,6,23,0.06)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.top h1{margin:0;font-size:18px}
+.top-actions{display:flex;gap:8px;align-items:center}
+.btn{padding:8px 10px;border-radius:8px;border:none;background:var(--accent);color:#fff;cursor:pointer;font-weight:600}
+.btn.muted{background:#f1f5f9;color:var(--muted)}
+.btn.danger{background:var(--danger);color:#fff}
+.file-btn{background:linear-gradient(180deg,#fff,#eef6ff);padding:8px;border-radius:8px;position:relative;overflow:hidden}
+.file-btn input{position:absolute;left:0;top:0;opacity:0;height:100%;width:100%;cursor:pointer}
+
+.editor-area{display:flex;gap:12px;margin-top:12px}
+.controls{width:300px;background:linear-gradient(180deg,#fff,#fbfdff);padding:12px;border-radius:10px;border:1px solid #eef6ff;display:flex;flex-direction:column;gap:10px}
+.controls h2{margin:0 0 6px 0;font-size:14px}
+.control{display:flex;flex-direction:column;gap:6px}
+.control input[type="range"]{width:100%}
+.control.presets{display:flex;gap:8px}
+.transform{display:flex;gap:8px}
+
+.canvas-wrap{flex:1;display:flex;flex-direction:column;gap:8px}
+.canvas-toolbar{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:8px;background:#fff;border:1px solid #eef6ff}
+.canvas-stage{position:relative;background:linear-gradient(180deg,#ffffff,#f8fbff);border-radius:10px;padding:12px;border:1px solid #eef6ff;display:flex;align-items:center;justify-content:center;min-height:420px}
+#editor-canvas, #overlay-canvas{max-width:100%;height:auto;display:block;border-radius:6px;position:relative}
+#overlay-canvas{position:absolute;left:12px;top:12px;cursor:crosshair}
+
+/* small */
+.small{font-size:13px;color:var(--muted)}
+.foot{margin-top:12px;color:var(--muted);font-size:13px;text-align:center}

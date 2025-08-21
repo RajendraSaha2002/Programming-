@@ -1,0 +1,43 @@
+:root{
+  --bg:#f7fbff;
+  --card:#fff;
+  --accent:#2563eb;
+  --muted:#64748b;
+  --shadow:0 10px 30px rgba(2,6,23,0.06);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:#071034}
+.app{max-width:980px;margin:28px auto;padding:18px;background:var(--card);border-radius:12px;box-shadow:var(--shadow)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.top h1{margin:0;font-size:18px}
+.file-btn{background:#eef6ff;padding:8px 10px;border-radius:8px;cursor:pointer;display:inline-block}
+.file-btn input{display:none}
+.muted{background:#f1f5f9;border:1px solid #e6eefc;padding:8px 10px;border-radius:8px}
+.player-area{display:flex;gap:12px;margin-top:12px}
+.playlist{width:300px;min-width:220px;background:linear-gradient(180deg,#fff,#fbfdff);padding:12px;border-radius:10px;border:1px solid #eef6ff}
+.drop-zone{padding:12px;border-radius:8px;border:2px dashed #e6eefc;color:var(--muted);text-align:center;margin-bottom:8px}
+.playlist-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;max-height:480px;overflow:auto}
+.playlist-item{display:flex;align-items:center;justify-content:space-between;padding:8px;border-radius:8px;background:#fbfdff;border:1px solid #f1f5f9;cursor:pointer}
+.playlist-item.active{background:linear-gradient(90deg,#eef2ff,#fff);border-color:rgba(37,99,235,0.14)}
+.controls-card{flex:1;background:linear-gradient(180deg,#fff,#f8fbff);padding:12px;border-radius:10px;border:1px solid #eef6ff;display:flex;flex-direction:column;gap:12px}
+.now{display:flex;flex-direction:column;gap:4px}
+.track-title{font-weight:700;font-size:16px}
+.track-meta{font-size:13px;color:var(--muted)}
+.visualizer-wrap{height:100px;display:flex;align-items:center;justify-content:center}
+canvas{width:100%;height:100%;border-radius:6px;background:linear-gradient(180deg,#ffffff,#f1f5ff);border:1px solid #eef6ff}
+.controls{display:flex;flex-direction:column;gap:10px}
+.controls > button{padding:8px 10px;border-radius:8px;border:none;background:var(--accent);color:white;cursor:pointer;width:48px;height:40px}
+.controls > button.hidden{display:none}
+.controls .seek{display:flex;align-items:center;gap:8px}
+.controls .seek input[type="range"]{flex:1}
+.extras{display:flex;gap:8px;align-items:center;justify-content:flex-end}
+.toggle input{margin-left:6px}
+.hints{color:var(--muted);font-size:13px}
+.foot{margin-top:12px;color:var(--muted);font-size:13px;text-align:center}
+
+/* responsive */
+@media (max-width:780px){
+  .player-area{flex-direction:column}
+  .playlist{width:100%}
+  .controls > button{width:40px}
+}

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Music Player — Local Files</title>
+  <link rel="stylesheet" href="Music_Player_GUI.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <h1>Music Player (Local Files)</h1>
+      <div class="top-actions">
+        <label class="file-btn">
+          Add files
+          <input id="file-input" type="file" accept="audio/*" multiple />
+        </label>
+        <button id="clear-playlist" class="muted">Clear</button>
+      </div>
+    </header>
+
+    <section class="player-area">
+      <aside class="playlist">
+        <h2>Playlist</h2>
+        <div id="drop-zone" class="drop-zone">Drop audio files here or use "Add files"</div>
+        <ul id="playlist" class="playlist-list" aria-live="polite"></ul>
+      </aside>
+
+      <section class="controls-card">
+        <div class="now">
+          <div id="track-title" class="track-title">No track loaded</div>
+          <div id="track-meta" class="track-meta"></div>
+        </div>
+
+        <div class="visualizer-wrap">
+          <canvas id="vis" width="640" height="100"></canvas>
+        </div>
+
+        <div class="controls">
+          <button id="prev" title="Previous">⏮</button>
+          <button id="play" title="Play">▶️</button>
+          <button id="pause" class="hidden" title="Pause">⏸️</button>
+          <button id="next" title="Next">⏭</button>
+
+          <div class="seek">
+            <span id="current-time">00:00</span>
+            <input id="seek" type="range" min="0" max="100" value="0" />
+            <span id="duration">00:00</span>
+          </div>
+
+          <div class="extras">
+            <label class="vol">Vol
+              <input id="volume" type="range" min="0" max="1" step="0.01" value="0.9" />
+            </label>
+            <label class="toggle">Repeat
+              <input id="repeat" type="checkbox" />
+            </label>
+            <label class="toggle">Shuffle
+              <input id="shuffle" type="checkbox" />
+            </label>
+          </div>
+        </div>
+
+        <div class="hints">
+          <small>Space: play/pause • ←/→: seek 5s • ↑/↓: volume</small>
+        </div>
+      </section>
+    </section>
+
+    <footer class="foot">
+      <small>Files are played locally in your browser. Files are not uploaded. For persistence across reloads, export playlist separately.</small>
+    </footer>
+  </main>
+
+  <!-- hidden audio element controlled from script -->
+  <audio id="audio" crossorigin="anonymous"></audio>
+
+  <script src="Music_Player_GUI.js"></script>
+</body>
+</html>

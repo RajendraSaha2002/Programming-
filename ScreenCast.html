@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Screencast Recorder + Annotator</title>
+  <link rel="stylesheet" href="ScreenCast.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <h1>Screencast Recorder + Annotator</h1>
+      <div class="controls">
+        <button id="start-capture" class="btn">Start Capture</button>
+        <label class="btn toggle">
+          <input id="with-mic" type="checkbox" /> Include Microphone
+        </label>
+        <button id="start-record" class="btn primary" disabled>Start Recording</button>
+        <button id="pause-record" class="btn" disabled>Pause</button>
+        <button id="resume-record" class="btn hidden" disabled>Resume</button>
+        <button id="stop-record" class="btn danger" disabled>Stop</button>
+        <button id="snapshot" class="btn muted" disabled>Snapshot</button>
+        <button id="download" class="btn" disabled>Download</button>
+      </div>
+    </header>
+
+    <section class="stage">
+      <div class="preview-wrap">
+        <video id="preview-video" autoplay muted playsinline></video>
+        <canvas id="composite-canvas"></canvas>
+        <canvas id="draw-canvas" class="draw"></canvas>
+      </div>
+
+      <aside class="annotation-panel">
+        <h3>Annotate</h3>
+        <div class="row">
+          <label>Color</label>
+          <input id="color" type="color" value="#ff0066" />
+        </div>
+        <div class="row">
+          <label>Size</label>
+          <input id="size" type="range" min="1" max="40" value="6" />
+        </div>
+        <div class="row">
+          <button id="undo" class="btn muted" disabled>Undo</button>
+          <button id="clear" class="btn muted" disabled>Clear</button>
+        </div>
+        <hr />
+        <h4>Recorded Clips</h4>
+        <ul id="clips" class="clips"></ul>
+      </aside>
+    </section>
+
+    <footer class="foot">
+      <small>All recording happens locally. Use "Start Capture" to grant screen permissions. While recording you can draw on top of the screen; the recording captures your annotations.</small>
+    </footer>
+  </main>
+
+  <script src="ScreenCast.js"></script>
+</body>
+</html>

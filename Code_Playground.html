@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Code Playground — Mini REPL</title>
+  <link rel="stylesheet" href="Code_Playground.css" />
+</head>
+<body>
+  <header class="top">
+    <h1>Code Playground — Mini REPL</h1>
+    <div class="actions">
+      <button id="run" class="btn primary">Run (Ctrl+Enter)</button>
+      <button id="stop" class="btn muted">Stop</button>
+      <button id="export-html" class="btn">Export HTML</button>
+      <button id="save-snippet" class="btn">Save</button>
+      <button id="clear-console" class="btn muted">Clear Console</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <h3>Snippets</h3>
+      <div id="snippets" class="snippets"></div>
+      <div class="snippet-actions">
+        <button id="new-snippet" class="btn muted">New</button>
+        <button id="delete-snippet" class="btn danger">Delete Selected</button>
+      </div>
+    </aside>
+
+    <section class="editor-pane">
+      <div class="editors">
+        <div class="editor">
+          <label>HTML</label>
+          <textarea id="html-editor" spellcheck="false"></textarea>
+        </div>
+        <div class="editor">
+          <label>CSS</label>
+          <textarea id="css-editor" spellcheck="false"></textarea>
+        </div>
+        <div class="editor">
+          <label>JavaScript</label>
+          <textarea id="js-editor" spellcheck="false"></textarea>
+        </div>
+      </div>
+
+      <div class="output-row">
+        <div class="output">
+          <div class="output-head">
+            <strong>Output</strong>
+          </div>
+          <iframe id="preview" sandbox="allow-scripts allow-modals"></iframe>
+        </div>
+
+        <div class="console">
+          <div class="console-head">
+            <strong>Console</strong>
+          </div>
+          <div id="console-log" class="console-log" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <small>Runs user code in a sandboxed iframe. Use Save to keep snippets in localStorage. This is a minimal playground — extend as you like.</small>
+  </footer>
+
+  <script src="Code_Playground.js"></script>
+</body>
+</html>
