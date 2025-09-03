@@ -1,61 +1,29 @@
 #include <iostream>
 #include <vector>
-#include <conio.h>    // For _kbhit() and _getch() on Windows
-#include <windows.h>  // For Sleep() and console functions on Windows
+#include <conio.h>
+#include <windows.h>
+#include <chrono>
+#include <thread>
 
-// --- Global Game Settings & Variables ---
-
+// Global variables for game state
 bool gameOver;
-const int width = 40;  // Width of the game area
-const int height = 20; // Height of the game area
-int x, y;              // Snake head coordinates
-int fruitX, fruitY;    // Fruit coordinates
-int score;
-std::vector<int> tailX, tailY; // Snake tail coordinates
-int nTail;             // Length of the tail
-
-// Enum for managing player direction
+const int width = 20;
+const int height = 20;
+int x, y, fruitX, fruitY, score;
+std::vector<int> tailX, tailY;
+int nTail;
 enum eDirection { STOP = 0, LEFT, RIGHT, UP, DOWN };
 eDirection dir;
 
-// --- Function Prototypes ---
-
-/**
- * @brief Sets up the initial state of the game.
- */
-void Setup();
-
-/**
- * @brief Draws the game board, snake, and fruit to the console.
- */
-void Draw();
-
-/**
- * @brief Handles user keyboard input for controlling the snake.
- */
-void Input();
-
-/**
- * @brief Updates the game state, including snake movement and collision detection.
- */
-void Logic();
-
-/**
- * @brief The main function to run the Snake game.
- */
-int main() {
-    Setup();
-    while (!gameOver) {
-        Draw();
-        Input();
-        Logic();
-        Sleep(100); // Slows down the game speed
-    }
-    return 0;
+// Function to move the cursor to a specific position on the console
+void gotoxy(int x, int y) {
+    COORD coord;
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-// --- Function Definitions ---
-
+// Function to initialize the game
 void Setup() {
     gameOver = false;
     dir = STOP;
@@ -65,19 +33,19 @@ void Setup() {
     fruitY = rand() % height;
     score = 0;
     nTail = 0;
-    tailX.clear();
-    tailY.clear();
 }
 
+// Function to draw the game board and all elements
 void Draw() {
-    // Clear the console screen (Windows specific)
-    system("cls"); 
+    // Clear the console screen
+    system("cls");
 
-    // Draw the top border
+    // Draw top border
     for (int i = 0; i < width + 2; i++)
         std::cout << "#";
     std::cout << std::endl;
 
+    // Draw game area and side borders
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             if (j == 0)
@@ -96,7 +64,7 @@ void Draw() {
                     }
                 }
                 if (!printTail)
-                    std::cout << " ";
+                    std::cout << " "; // Empty space
             }
 
             if (j == width - 1)
@@ -105,30 +73,31 @@ void Draw() {
         std::cout << std::endl;
     }
 
-    // Draw the bottom border
+    // Draw bottom border
     for (int i = 0; i < width + 2; i++)
         std::cout << "#";
     std::cout << std::endl;
 
     // Display the score
-    std::cout << "Score:" << score << std::endl;
+    std::cout << "Score: " << score << std::endl;
 }
 
+// Function to handle user input
 void Input() {
-    // Check if a key has been pressed (Windows specific)
+    // Check if a key has been pressed
     if (_kbhit()) {
-        switch (_getch()) { // Get the character of the pressed key
+        switch (_getch()) {
             case 'a':
-                if (dir != RIGHT) dir = LEFT;
+                dir = LEFT;
                 break;
             case 'd':
-                if (dir != LEFT) dir = RIGHT;
+                dir = RIGHT;
                 break;
             case 'w':
-                if (dir != DOWN) dir = UP;
+                dir = UP;
                 break;
             case 's':
-                if (dir != UP) dir = DOWN;
+                dir = DOWN;
                 break;
             case 'x':
                 gameOver = true;
@@ -137,19 +106,16 @@ void Input() {
     }
 }
 
+// Function to update game logic
 void Logic() {
-    // --- Update tail positions ---
-    int prevX = tailX.empty() ? x : tailX[0];
-    int prevY = tailY.empty() ? y : tailY[0];
+    // Store the previous position of the snake's head
+    int prevX = tailX[0];
+    int prevY = tailY[0];
     int prev2X, prev2Y;
-    if (!tailX.empty()) {
-        tailX[0] = x;
-        tailY[0] = y;
-    } else if (nTail > 0) { // First segment of tail
-        tailX.push_back(x);
-        tailY.push_back(y);
-    }
+    tailX[0] = x;
+    tailY[0] = y;
 
+    // Move the rest of the tail
     for (int i = 1; i < nTail; i++) {
         prev2X = tailX[i];
         prev2Y = tailY[i];
@@ -159,7 +125,7 @@ void Logic() {
         prevY = prev2Y;
     }
 
-    // --- Update head position based on direction ---
+    // Update the snake's head position based on direction
     switch (dir) {
         case LEFT:
             x--;
@@ -177,34 +143,38 @@ void Logic() {
             break;
     }
 
-    // --- Collision Detection ---
-
-    // Wall collision
+    // Check for collision with walls
     if (x >= width || x < 0 || y >= height || y < 0) {
         gameOver = true;
-        std::cout << "\n--- Game Over! You hit the wall. ---" << std::endl;
-        std::cout << "Final Score: " << score << std::endl;
     }
 
-    // Self collision
+    // Check for collision with the tail
     for (int i = 0; i < nTail; i++) {
         if (tailX[i] == x && tailY[i] == y) {
             gameOver = true;
-            std::cout << "\n--- Game Over! You bit your own tail. ---" << std::endl;
-            std::cout << "Final Score: " << score << std::endl;
         }
     }
 
-    // Fruit collision
+    // Check if the snake ate the fruit
     if (x == fruitX && y == fruitY) {
         score += 10;
         fruitX = rand() % width;
         fruitY = rand() % height;
         nTail++;
-        // Add a new tail segment at the current head position
-        if (nTail > tailX.size()) {
-             tailX.push_back(x);
-             tailY.push_back(y);
-        }
+        tailX.push_back(0);
+        tailY.push_back(0);
     }
+}
+
+int main() {
+    Setup();
+    while (!gameOver) {
+        Draw();
+        Input();
+        Logic();
+        // Slow down the game loop (using Windows Sleep to avoid std::this_thread issue)
+        Sleep(100);
+    }
+    std::cout << "Game Over!" << std::endl;
+    return 0;
 }
