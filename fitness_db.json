@@ -1,0 +1,74 @@
+{
+  "warmups": [
+    "2 min brisk walk or march in place",
+    "Arm circles + band pull-aparts (10–15 reps each)",
+    "Hip hinges + bodyweight squats (10 reps each)",
+    "World’s greatest stretch (each side)",
+    "Glute bridge (10–15 reps)"
+  ],
+  "mobility": [
+    "Hamstring stretch 30s/side",
+    "Hip flexor stretch 30s/side",
+    "Thoracic rotation 6–8/side",
+    "Child’s pose breathing 60s"
+  ],
+  "conditioning": {
+    "hiit": "10 rounds: 20s hard / 40s easy on bike/rower or fast shadow boxing",
+    "liss": "20–30 min brisk walk, incline treadmill, cycling, or easy swim",
+    "liss_no_run": "20–30 min cycling, elliptical, rowing, or brisk walk with low impact"
+  },
+  "exercises": {
+    "push": [
+      { "name": "Push-up", "equipment": "none", "level": "beginner", "note": "Elevate hands if needed" },
+      { "name": "Pike push-up", "equipment": "none", "level": "intermediate" },
+      { "name": "Dumbbell bench press", "equipment": "basic", "level": "beginner" },
+      { "name": "Dumbbell overhead press", "equipment": "basic", "level": "beginner" },
+      { "name": "Barbell bench press", "equipment": "gym", "level": "intermediate" },
+      { "name": "Machine shoulder press", "equipment": "gym", "level": "beginner" }
+    ],
+    "pull": [
+      { "name": "Inverted row (table/TRX)", "equipment": "none", "level": "beginner" },
+      { "name": "Pull-up / Assisted pull-up", "equipment": "gym", "level": "intermediate" },
+      { "name": "One-arm dumbbell row", "equipment": "basic", "level": "beginner" },
+      { "name": "Lat pulldown", "equipment": "gym", "level": "beginner" },
+      { "name": "Seated cable row", "equipment": "gym", "level": "beginner" }
+    ],
+    "squat": [
+      { "name": "Bodyweight squat", "equipment": "none", "level": "beginner" },
+      { "name": "Goblet squat (DB/Kettlebell)", "equipment": "basic", "level": "beginner" },
+      { "name": "Barbell back squat", "equipment": "gym", "level": "intermediate" },
+      { "name": "Hack squat machine", "equipment": "gym", "level": "beginner" }
+    ],
+    "hinge": [
+      { "name": "Hip hinge drill (dowel)", "equipment": "none", "level": "beginner" },
+      { "name": "Kettlebell deadlift", "equipment": "basic", "level": "beginner" },
+      { "name": "Romanian deadlift (DB/BB)", "equipment": "basic", "level": "intermediate" },
+      { "name": "Barbell deadlift (technique focus)", "equipment": "gym", "level": "intermediate" },
+      { "name": "Back extension (machine)", "equipment": "gym", "level": "beginner" }
+    ],
+    "single_leg": [
+      { "name": "Split squat (bodyweight)", "equipment": "none", "level": "beginner" },
+      { "name": "Reverse lunge (DB optional)", "equipment": "basic", "level": "beginner" },
+      { "name": "Bulgarian split squat", "equipment": "basic", "level": "intermediate" }
+    ],
+    "glutes": [
+      { "name": "Glute bridge / Hip thrust", "equipment": "basic", "level": "beginner" },
+      { "name": "Cable pull-through", "equipment": "gym", "level": "beginner" },
+      { "name": "Hip thrust (barbell)", "equipment": "gym", "level": "intermediate" }
+    ],
+    "core": [
+      { "name": "Dead bug", "equipment": "none", "level": "beginner" },
+      { "name": "Side plank", "equipment": "none", "level": "beginner" },
+      { "name": "Plank with shoulder taps", "equipment": "none", "level": "intermediate" },
+      { "name": "Hanging knee raise", "equipment": "gym", "level": "intermediate" },
+      { "name": "Cable pallof press", "equipment": "gym", "level": "beginner" }
+    ],
+    "accessory": [
+      { "name": "Dumbbell lateral raise", "equipment": "basic", "level": "beginner" },
+      { "name": "Hammer curl", "equipment": "basic", "level": "beginner" },
+      { "name": "Triceps rope pressdown", "equipment": "gym", "level": "beginner" },
+      { "name": "Face pull (band/cable)", "equipment": "basic", "level": "beginner" },
+      { "name": "Calf raise", "equipment": "basic", "level": "beginner" }
+    ]
+  }
+}

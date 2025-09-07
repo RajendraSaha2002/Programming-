@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coaching Bot</title>
+  <!-- Reuse your existing styling -->
+  <link rel="stylesheet" href="Gita_Chatbot.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="logo.png" alt="Concept Mentor Logo" class="logo">
+      <h1>Coaching</h1>
+    </header>
+
+    <main>
+      <form id="questionForm">
+        <div class="form-group">
+          <label for="username">Your Name:</label>
+          <input type="text" id="username" required>
+        </div>
+
+        <div class="form-group">
+          <label for="language">Language:</label>
+          <input type="text" id="language" placeholder="English, Hindi, etc." required>
+        </div>
+
+        <div class="form-group">
+          <label for="concept">Concept:</label>
+          <select id="concept">
+            <option value="stoicism">Stoicism (Marcus Aurelius style)</option>
+            <option value="cbt">CBT Coach (Psychology)</option>
+            <option value="productivity">Productivity Mentor (GTD/Deep Work)</option>
+            <option value="career">Career Coach (Resume/Interview)</option>
+          </select>
+        </div>
+
+        <div class="message-section">
+          <p class="message-label">Share what you need guidance on</p>
+
+          <div class="input-toggle">
+            <button type="button" id="toggleInput">Switch to Microphone Input</button>
+          </div>
+
+          <div id="textInputContainer">
+            <textarea id="textMessage" rows="6" required></textarea>
+          </div>
+
+          <div id="micInputContainer" class="hidden">
+            <div id="spokenText" class="spoken-text">"Your spoken words will appear here"</div>
+            <button type="button" id="startListening" class="mic-button" aria-label="Start listening">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="70" role="img" aria-hidden="true">
+                <path d="M12 16c2.206 0 4-1.795 4-4V6c0-2.206-1.794-4-4-4S8 3.794 8 6v6c0 2.205 1.794 4 4 4zm7-4v-2a1 1 0 1 0-2 0v2c0 2.757-2.243 5-5 5s-5-2.243-5-5v-2a1 1 0 1 0-2 0v2c0 3.52 2.613 6.92 6 6.92V20H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-3v-1.08c3.387-.488 6-3.4 6-6.92z" fill="#ffffff"></path>
+              </svg>
+            </button>
+            <div id="listeningIndicator" class="hidden">Listening...</div>
+          </div>
+        </div>
+
+        <button type="submit" id="submitBtn">Ask For Guidance</button>
+      </form>
+
+      <div id="responseContainer" class="hidden">
+        <h2>Your Guidance</h2>
+        <div id="responseMessage"></div>
+      </div>
+
+      <div id="loadingIndicator" class="hidden">
+        <div class="spinner"></div>
+        <p>Thinking...</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="Coaching_Bot.js"></script>
+</body>
+</html>

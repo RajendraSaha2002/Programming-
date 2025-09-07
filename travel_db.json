@@ -1,0 +1,204 @@
+{
+  "cities": {
+    "paris": {
+      "country": "France",
+      "local": {
+        "transport": "Metro (Navigo Easy/Weekly pass)",
+        "bestSeason": "Apr-Jun, Sep-Oct"
+      },
+      "categories": {
+        "culture": [
+          { "name": "Louvre Museum", "area": "1st arrondissement", "time": "2-3h", "best": "Morning" },
+          { "name": "Musée d'Orsay", "area": "7th arrondissement", "time": "2h", "best": "Morning" },
+          { "name": "Notre-Dame (exterior) & Île de la Cité", "time": "1-2h" },
+          { "name": "Arc de Triomphe & Champs-Élysées", "time": "1-2h", "best": "Evening" }
+        ],
+        "nature": [
+          { "name": "Luxembourg Gardens", "time": "1-2h", "best": "Morning" },
+          { "name": "Seine Riverbank Walk", "time": "1-2h", "best": "Evening" }
+        ],
+        "food": [
+          { "name": "Le Comptoir du Relais" },
+          { "name": "Rue Montorgueil food street" },
+          { "name": "Crêperie Josselin" }
+        ],
+        "shopping": [
+          { "name": "Le Marais Boutiques" },
+          { "name": "Galeries Lafayette" }
+        ],
+        "nightlife": [
+          { "name": "Latin Quarter bars" },
+          { "name": "Rooftop at Le Perchoir" }
+        ],
+        "adventure": [
+          { "name": "E-scooter along Seine (where permitted)" }
+        ],
+        "spiritual": [
+          { "name": "Sacre-Cœur Basilica", "area": "Montmartre", "time": "1h", "best": "Sunset" }
+        ]
+      },
+      "tips": [
+        "Buy tickets in advance for major museums.",
+        "Beware of pickpockets in crowded areas."
+      ]
+    },
+    "tokyo": {
+      "country": "Japan",
+      "local": {
+        "transport": "Suica/PASMO IC card; JR/Metro lines",
+        "bestSeason": "Mar-May (sakura), Oct-Nov (foliage)"
+      },
+      "categories": {
+        "culture": [
+          { "name": "Senso-ji Temple", "area": "Asakusa", "time": "1-2h", "best": "Morning" },
+          { "name": "Meiji Shrine", "area": "Harajuku", "time": "1h" },
+          { "name": "TeamLab Planets (digital art)", "time": "1-2h" }
+        ],
+        "nature": [
+          { "name": "Ueno Park", "time": "1-2h" },
+          { "name": "Shinjuku Gyoen National Garden", "time": "1-2h" }
+        ],
+        "food": [
+          { "name": "Depachika (department store food halls)" },
+          { "name": "Tsukiji Outer Market street food" },
+          { "name": "Izakaya alley at Omoide Yokocho" }
+        ],
+        "shopping": [
+          { "name": "Akihabara (electronics/anime)" },
+          { "name": "Shibuya & Harajuku fashion" }
+        ],
+        "nightlife": [
+          { "name": "Golden Gai (Shinjuku)" },
+          { "name": "Shibuya Scramble night views" }
+        ],
+        "adventure": [
+          { "name": "Tokyo Tower/Skytree observation decks" }
+        ],
+        "spiritual": [
+          { "name": "Zojo-ji Temple" }
+        ]
+      },
+      "tips": [
+        "Carry cash; many places now accept cards but small shops may prefer cash.",
+        "Etiquette: stand left/right on escalators depending on area; be quiet on trains."
+      ]
+    },
+    "delhi": {
+      "country": "India",
+      "local": {
+        "transport": "Delhi Metro / cabs",
+        "bestSeason": "Oct-Mar"
+      },
+      "categories": {
+        "culture": [
+          { "name": "Red Fort", "time": "1-2h", "best": "Morning" },
+          { "name": "Humayun’s Tomb", "time": "1-2h" },
+          { "name": "Qutub Minar Complex", "time": "1-2h" },
+          { "name": "India Gate & Rajpath", "time": "1h", "best": "Evening" }
+        ],
+        "nature": [
+          { "name": "Lodhi Garden", "time": "1h", "best": "Morning" }
+        ],
+        "food": [
+          { "name": "Paranthe Wali Gali (Old Delhi)" },
+          { "name": "Karim’s (Jama Masjid)" },
+          { "name": "Modern Indian at Indian Accent" }
+        ],
+        "shopping": [
+          { "name": "Dilli Haat (crafts & food)" },
+          { "name": "Khan Market" }
+        ],
+        "nightlife": [
+          { "name": "Hauz Khas Village" }
+        ],
+        "adventure": [
+          { "name": "Cycling tour (Old Delhi) early morning" }
+        ],
+        "spiritual": [
+          { "name": "Akshardham Temple", "time": "2-3h" },
+          { "name": "Gurudwara Bangla Sahib" }
+        ]
+      },
+      "tips": [
+        "Prefer bottled water; avoid raw foods if sensitive.",
+        "Use ride-hailing apps for safer pricing."
+      ]
+    },
+    "goa": {
+      "country": "India",
+      "local": {
+        "transport": "Self-drive scooter/car or cabs",
+        "bestSeason": "Nov-Feb"
+      },
+      "categories": {
+        "culture": [
+          { "name": "Basilica of Bom Jesus (Old Goa)", "time": "1h" },
+          { "name": "Fort Aguada", "time": "1h", "best": "Sunset" }
+        ],
+        "nature": [
+          { "name": "Beaches: Calangute / Baga (North)", "time": "2-3h" },
+          { "name": "Palolem Beach (South)", "time": "2-3h" },
+          { "name": "Dudhsagar Waterfalls (day trip)", "time": "Half/Full day" }
+        ],
+        "food": [
+          { "name": "Goan thali at local shack" },
+          { "name": "Fish curry rice (Konkani cuisine)" }
+        ],
+        "shopping": [
+          { "name": "Anjuna Flea Market (Wed)" }
+        ],
+        "nightlife": [
+          { "name": "Beach shacks & clubs (Baga/Anjuna)" }
+        ],
+        "adventure": [
+          { "name": "Water sports (Candolim/Baga)" }
+        ],
+        "spiritual": [
+          { "name": "Shri Mangeshi Temple" }
+        ]
+      },
+      "tips": [
+        "Sun protection and hydration are essential.",
+        "Drive carefully; roads can be narrow and busy."
+      ]
+    },
+    "jaipur": {
+      "country": "India",
+      "local": {
+        "transport": "Auto/cabs; some metro",
+        "bestSeason": "Oct-Mar"
+      },
+      "categories": {
+        "culture": [
+          { "name": "Amber Fort", "time": "2-3h", "best": "Morning" },
+          { "name": "City Palace & Jantar Mantar", "time": "2h" },
+          { "name": "Hawa Mahal (exterior)", "time": "30m-1h" }
+        ],
+        "nature": [
+          { "name": "Nahargarh Fort sunset point", "time": "1-2h", "best": "Evening" }
+        ],
+        "food": [
+          { "name": "Rajasthani thali (LMB/Rawat)" },
+          { "name": "Pyaz Kachori" }
+        ],
+        "shopping": [
+          { "name": "Johari Bazaar (jewelry)" },
+          { "name": "Bapu Bazaar (textiles)" }
+        ],
+        "nightlife": [
+          { "name": "Rooftop cafés near MI Road" }
+        ],
+        "adventure": [
+          { "name": "Early morning hot-air balloon (seasonal)" }
+        ],
+        "spiritual": [
+          { "name": "Govind Dev Ji Temple" }
+        ]
+      },
+      "tips": [
+        "Start early for forts to avoid heat.",
+        "Bargain respectfully in local bazaars."
+      ]
+    }
+  }
+}

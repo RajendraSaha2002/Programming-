@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Cognitive Distortions",
+    "category": "thinking",
+    "keywords": ["negative thought", "always", "never", "catastrophize", "mind reading"],
+    "answer": "Notice thinking patterns like all-or-nothing, mind reading, or catastrophizing. Challenge them with balanced alternatives.",
+    "steps": [
+      "Write the thought exactly as it appears.",
+      "Label the distortion (e.g., catastrophizing).",
+      "Ask: what is an evidence-based alternative thought?"
+    ]
+  },
+  {
+    "title": "Thought Record",
+    "category": "tool",
+    "keywords": ["thought record", "journal", "log"],
+    "answer": "Use a thought record: situation, emotions (0–100), automatic thought, evidence for/against, balanced thought, outcome.",
+    "steps": [
+      "Capture a recent stressful moment.",
+      "Fill the columns honestly.",
+      "Rate emotions before and after."
+    ]
+  },
+  {
+    "title": "Behavioral Activation",
+    "category": "mood",
+    "keywords": ["low mood", "depression", "no energy", "motivation"],
+    "answer": "Schedule small, meaningful activities to lift mood. Action leads, motivation follows.",
+    "steps": [
+      "List 3 small rewarding activities.",
+      "Schedule one for today (10–20 minutes).",
+      "Do it regardless of mood; review after."
+    ]
+  },
+  {
+    "title": "Exposure (Anxiety)",
+    "category": "anxiety",
+    "keywords": ["fear", "avoidance", "panic", "phobia"],
+    "answer": "Create a gradual exposure ladder. Facing fears in small, repeated steps reduces anxiety over time.",
+    "steps": [
+      "List steps from easiest to hardest.",
+      "Practice the easiest step repeatedly until anxiety drops.",
+      "Move up one step at a time."
+    ]
+  },
+  {
+    "title": "General",
+    "category": "general",
+    "keywords": [],
+    "answer": "Name the thought, breathe slowly, and test it against facts. Plan one tiny action aligned with your values today."
+  }
+]

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Decision-Tree Chatbot</title>
+  <style>
+    body{font-family:sans-serif;background:#0f1420;color:#fff;margin:0;padding:20px;}
+    .chat{max-width:720px;margin:0 auto;}
+    .card{background:#1a2233;border-radius:12px;padding:16px;}
+    .q{font-size:18px;margin-bottom:12px;}
+    .options{display:flex;flex-wrap:wrap;gap:8px;}
+    button{padding:10px 12px;border:none;border-radius:8px;background:#fff;color:#4a148c;font-weight:bold;cursor:pointer;}
+    .log{margin-top:16px;opacity:.9;}
+  </style>
+</head>
+<body>
+  <div class="chat card">
+    <h2>Decision-Tree Bot</h2>
+    <div id="question" class="q"></div>
+    <div id="options" class="options"></div>
+    <div id="log" class="log"></div>
+  </div>
+  <script src="./decision-bot.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+[
+  {
+    "title": "Dichotomy of Control",
+    "category": "mindset",
+    "keywords": ["control", "worry", "future", "anxiety", "outcome"],
+    "answer": "Focus only on what is within your control: your judgments, intentions, and actions. Release concern over outcomes and other people’s opinions.",
+    "steps": [
+      "List the parts of this problem you can control vs. cannot.",
+      "Commit to one controllable action today.",
+      "Journal how you felt after acting on what you control."
+    ],
+    "resources": ["Practice: Evening reflection on actions and judgments."]
+  },
+  {
+    "title": "Present Moment Discipline",
+    "category": "practice",
+    "keywords": ["present", "now", "mindfulness", "distraction"],
+    "answer": "Bring attention back to the present duty. The present is where virtue is practiced and peace is possible.",
+    "steps": [
+      "Set a 25-minute focus timer (no notifications).",
+      "Single-task on one meaningful duty.",
+      "Breathe and reset for 5 minutes; repeat."
+    ]
+  },
+  {
+    "title": "Negative Visualization",
+    "category": "resilience",
+    "keywords": ["fear", "loss", "what if", "catastrophe"],
+    "answer": "Imagine setbacks briefly to train gratitude and resilience. When adversity arrives, you won’t be surprised—you’ll be prepared.",
+    "steps": [
+      "Spend 2 minutes imagining a mild setback.",
+      "Plan one small protective action.",
+      "Note one thing you appreciate right now."
+    ]
+  },
+  {
+    "title": "Virtue First",
+    "category": "values",
+    "keywords": ["purpose", "meaning", "values", "virtue"],
+    "answer": "Let virtue (wisdom, courage, justice, temperance) guide choices. Meaning emerges when actions align with these virtues.",
+    "steps": [
+      "Pick one virtue to emphasize today.",
+      "Define one action that expresses it.",
+      "Review at night: how did you practice it?"
+    ]
+  },
+  {
+    "title": "General",
+    "category": "general",
+    "keywords": [],
+    "answer": "Return to what is in your control, act with calm courage, and accept outcomes. Begin with a small, virtuous action now."
+  }
+]

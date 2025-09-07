@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Memory Bot</title>
+  <style>
+    body{font-family:sans-serif;background:#0f1420;color:#fff;margin:0;padding:20px;}
+    .chat{max-width:780px;margin:0 auto;}
+    .messages{background:#1b2334;border-radius:12px;padding:16px;min-height:320px;}
+    .msg{margin:8px 0;padding:10px 12px;border-radius:10px;max-width:80%;}
+    .user{background:#4a148c;margin-left:auto;}
+    .bot{background:#27314a;}
+    form{display:flex;gap:8px;margin-top:12px;}
+    input,button{padding:10px 12px;border-radius:8px;border:none;}
+    input{flex:1;background:#20283a;color:#fff;}
+    button{background:#fff;color:#4a148c;font-weight:bold;cursor:pointer;}
+    .hint{opacity:.8;font-size:14px;margin:6px 0;}
+  </style>
+</head>
+<body>
+  <div class="chat">
+    <h2>Memory Bot</h2>
+    <p class="hint">This bot keeps lightweight memory and recalls your preferences.</p>
+    <div id="messages" class="messages"></div>
+    <form id="form">
+      <input id="input" placeholder="Tell me about yourself..." autocomplete="off" />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+  <script src="./memory-bot.js"></script>
+</body>
+</html>

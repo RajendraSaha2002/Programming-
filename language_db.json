@@ -1,0 +1,104 @@
+{
+  "languages": {
+    "spanish": {
+      "name": "Spanish",
+      "vocab": [
+        { "native": "apple", "target": "manzana", "alts": ["la manzana"] },
+        { "native": "water", "target": "agua", "alts": ["el agua"] },
+        { "native": "bread", "target": "pan" },
+        { "native": "house", "target": "casa", "alts": ["la casa"] },
+        { "native": "book", "target": "libro", "alts": ["el libro"] },
+        { "native": "cat", "target": "gato", "alts": ["el gato"] },
+        { "native": "dog", "target": "perro", "alts": ["el perro"] },
+        { "native": "coffee", "target": "café", "alts": ["cafe"] },
+        { "native": "tea", "target": "té", "alts": ["te"] },
+        { "native": "school", "target": "escuela", "alts": ["la escuela"] }
+      ],
+      "phrases": [
+        { "native": "Hello!", "target": "¡Hola!" },
+        { "native": "Good morning", "target": "Buenos días" },
+        { "native": "Thank you", "target": "Gracias" },
+        { "native": "How are you?", "target": "¿Cómo estás?" },
+        { "native": "I would like coffee", "target": "Quisiera café" }
+      ],
+      "fill": [
+        { "sentence": "Yo ___ agua.", "answer": "bebo", "hint": "to drink (beber)" },
+        { "sentence": "La ___ es roja. (apple)", "answer": "manzana" },
+        { "sentence": "Nosotros ___ al parque.", "answer": "vamos", "hint": "to go (ir)" },
+        { "sentence": "Ellos ___ en una casa.", "answer": "viven", "hint": "to live (vivir)" }
+      ]
+    },
+    "hindi": {
+      "name": "Hindi",
+      "vocab": [
+        { "native": "water", "target": "पानी", "alts": ["पानी", "paani"], "roman": "paani" },
+        { "native": "tea", "target": "चाय", "alts": ["chai", "चाय"], "roman": "chai" },
+        { "native": "house", "target": "घर", "alts": ["ghar", "घर"], "roman": "ghar" },
+        { "native": "book", "target": "किताब", "alts": ["kitaab", "किताब"], "roman": "kitaab" },
+        { "native": "friend", "target": "दोस्त", "alts": ["dost", "दोस्त"], "roman": "dost" },
+        { "native": "food", "target": "खाना", "alts": ["khana", "खाना"], "roman": "khana" }
+      ],
+      "phrases": [
+        { "native": "Hello!", "target": "नमस्ते", "roman": "namaste" },
+        { "native": "How are you?", "target": "आप कैसे हैं?", "roman": "aap kaise hain?" },
+        { "native": "Thank you", "target": "धन्यवाद", "roman": "dhanyavaad" },
+        { "native": "Where is the market?", "target": "बाज़ार कहाँ है?", "roman": "bazaar kahaan hai?" }
+      ],
+      "fill": [
+        { "sentence": "मैं ___ पीता/पीती हूँ। (tea)", "answer": "चाय", "alts": ["chai"], "roman": "chai" },
+        { "sentence": "वह ___ पढ़ता/पढ़ती है। (book)", "answer": "किताब", "alts": ["kitaab"], "roman": "kitaab" },
+        { "sentence": "वे ___ में रहते हैं। (house)", "answer": "घर", "alts": ["ghar"], "roman": "ghar" }
+      ]
+    },
+    "french": {
+      "name": "French",
+      "vocab": [
+        { "native": "apple", "target": "pomme", "alts": ["la pomme"] },
+        { "native": "water", "target": "eau", "alts": ["l'eau", "eau"] },
+        { "native": "book", "target": "livre", "alts": ["le livre"] },
+        { "native": "house", "target": "maison", "alts": ["la maison"] },
+        { "native": "cat", "target": "chat", "alts": ["le chat"] },
+        { "native": "dog", "target": "chien", "alts": ["le chien"] },
+        { "native": "bread", "target": "pain", "alts": ["le pain"] },
+        { "native": "coffee", "target": "café", "alts": ["cafe"] },
+        { "native": "tea", "target": "thé", "alts": ["the"] }
+      ],
+      "phrases": [
+        { "native": "Good morning", "target": "Bonjour" },
+        { "native": "Thank you", "target": "Merci" },
+        { "native": "How are you?", "target": "Comment ça va ?" },
+        { "native": "I would like coffee", "target": "Je voudrais un café" }
+      ],
+      "fill": [
+        { "sentence": "Je ___ de l'eau.", "answer": "bois", "hint": "to drink (boire)" },
+        { "sentence": "La ___ est rouge. (apple)", "answer": "pomme" },
+        { "sentence": "Nous ___ à l'école.", "answer": "allons", "hint": "to go (aller)" }
+      ]
+    },
+    "german": {
+      "name": "German",
+      "vocab": [
+        { "native": "apple", "target": "Apfel", "alts": ["der Apfel"] },
+        { "native": "water", "target": "Wasser", "alts": [] },
+        { "native": "house", "target": "Haus", "alts": ["das Haus"] },
+        { "native": "book", "target": "Buch", "alts": ["das Buch"] },
+        { "native": "cat", "target": "Katze", "alts": ["die Katze"] },
+        { "native": "dog", "target": "Hund", "alts": ["der Hund"] },
+        { "native": "bread", "target": "Brot", "alts": [] },
+        { "native": "coffee", "target": "Kaffee", "alts": [] },
+        { "native": "tea", "target": "Tee", "alts": [] }
+      ],
+      "phrases": [
+        { "native": "Good morning", "target": "Guten Morgen" },
+        { "native": "Thank you", "target": "Danke" },
+        { "native": "How are you?", "target": "Wie geht's?" },
+        { "native": "I would like coffee", "target": "Ich hätte gern einen Kaffee" }
+      ],
+      "fill": [
+        { "sentence": "Ich ___ Wasser.", "answer": "trinke", "hint": "to drink (trinken)" },
+        { "sentence": "Das ___ ist groß. (house)", "answer": "Haus" },
+        { "sentence": "Wir ___ zur Schule.", "answer": "gehen", "hint": "to go (gehen)" }
+      ]
+    }
+  }
+}

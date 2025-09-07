@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Tailored Resume",
+    "category": "resume",
+    "keywords": ["resume", "cv", "job", "apply"],
+    "answer": "Tailor your resume to the job: mirror the key skills, quantify impact, and keep it concise (1 page for juniors).",
+    "steps": [
+      "Read the JD; highlight top 5 skills.",
+      "Rewrite bullets using those keywords.",
+      "Quantify outcomes (e.g., 20% faster, 3x users)."
+    ]
+  },
+  {
+    "title": "STAR Interviews",
+    "category": "interview",
+    "keywords": ["interview", "behavioral", "questions", "prepare"],
+    "answer": "Use STAR: Situation, Task, Action, Result. Prepare 6–8 stories covering conflict, leadership, failure, and impact.",
+    "steps": [
+      "List projects with measurable outcomes.",
+      "Write STAR bullets for each.",
+      "Practice aloud and time your answers."
+    ]
+  },
+  {
+    "title": "Networking that Helps",
+    "category": "networking",
+    "keywords": ["network", "referral", "linkedin", "connect"],
+    "answer": "Offer value: share insights, code, or small contributions. Build relationships before asking for referrals.",
+    "steps": [
+      "Send 2 thoughtful messages weekly.",
+      "Share one useful post or mini-project.",
+      "Follow up kindly in 1–2 weeks."
+    ]
+  },
+  {
+    "title": "Projects Portfolio",
+    "category": "portfolio",
+    "keywords": ["projects", "github", "portfolio", "showcase"],
+    "answer": "Show, don’t just tell. Build 2–3 solid projects with readme, demo, and tests. Recruiters love clear impact.",
+    "steps": [
+      "Pick problems tied to real users.",
+      "Ship MVPs; write clean READMEs with screenshots.",
+      "Pin your best repos on GitHub."
+    ]
+  },
+  {
+    "title": "General",
+    "category": "general",
+    "keywords": [],
+    "answer": "Clarify your target role, tailor your narrative, and show evidence through projects and stories."
+  }
+]

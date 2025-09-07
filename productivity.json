@@ -1,0 +1,52 @@
+[
+  {
+    "title": "GTD Capture & Clarify",
+    "category": "workflow",
+    "keywords": ["overwhelm", "too much", "tasks", "to-do"],
+    "answer": "Capture everything out of your head, then clarify next actions. Your mind is for having ideas, not holding them.",
+    "steps": [
+      "Brain-dump all open loops (5–10 min).",
+      "For each item: define the very next physical action.",
+      "Move someday/maybe items off your main list."
+    ]
+  },
+  {
+    "title": "Timeboxing Deep Work",
+    "category": "focus",
+    "keywords": ["focus", "distraction", "procrastination", "phone"],
+    "answer": "Protect distraction-free blocks for your most important work. Shallow work can wait.",
+    "steps": [
+      "Pick one high-impact task.",
+      "Book a 50–90 min deep work block (no notifications).",
+      "End with a 10-min review and plan the next block."
+    ]
+  },
+  {
+    "title": "80/20 Prioritization",
+    "category": "leverage",
+    "keywords": ["prioritize", "impact", "results", "limit time"],
+    "answer": "Find the 20% of tasks that create 80% of results. Do those first.",
+    "steps": [
+      "List tasks for today.",
+      "Mark the top 1–3 by impact, not urgency.",
+      "Do the first one to completion before switching."
+    ]
+  },
+  {
+    "title": "Weekly Review",
+    "category": "maintenance",
+    "keywords": ["review", "plan", "reflect", "weekly"],
+    "answer": "A short weekly review keeps you aligned: clear inboxes, update projects, choose next priorities.",
+    "steps": [
+      "Clear inboxes (email, notes, tasks).",
+      "Review projects and next actions.",
+      "Choose top three priorities for next week."
+    ]
+  },
+  {
+    "title": "General",
+    "category": "general",
+    "keywords": [],
+    "answer": "Reduce inputs, clarify next actions, and protect deep work time. Progress comes from consistent small wins."
+  }
+]
